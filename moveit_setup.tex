@@ -48,13 +48,13 @@
 \journalnumber{1}                       %will be inserted by the editor
 \journalvolume{1}                       %will be inserted by the editor
 \journalmonth{September}                %will be inserted by the editor
-\journalyear{2009}                      %will be inserted by the editor
-\articlefirstpage{123}                  %will be inserted by the editor
-\articlelastpage{126}                   %will be inserted by the editor
-\setcounter{page}{123}                  %will be inserted by the editor
+\journalyear{2013}                      %will be inserted by the editor
+\articlefirstpage{1}                  %will be inserted by the editor
+\articlelastpage{10}                   %will be inserted by the editor
+\setcounter{page}{1}                  %will be inserted by the editor
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\copyrightauthor{F. Author, S. Author, T. Author}
+\copyrightauthor{D. Coleman, N. Correll}
 \headoddname{F. A. AUTHOR et al./ Preparation of Papers for {\sl Journal of Software Engineering for Robotics}}%
 
 % correct bad hyphenation here
@@ -63,14 +63,14 @@
 
 \begin{document}
 % paper title
-\title{Preparation of Papers for \\\vskip 0.3\baselineskip Journal of Software Engineering for Robotics}
+\title{Reducing the Barrier to Entry of \\\vskip 0.3\baselineskip Complex Robotic Motion Planning Software}
 
 \author{
-First-Aa AUTHOR$^{1,*}$
+David COLEMAN$^{1}$
 \qquad
-Second-Bb AUTHOR$^{1,2}$
-\qquad
-Third AUTHOR$^2$
+Nikolaus CORRELL$^{1}$
+%\qquad
+%Third AUTHOR$^2$
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%% will be inserted by the editor %%%%%%%%%%%%%%%%
@@ -93,10 +93,11 @@ acknowledged.}
 } % end author
 
 \address{
-$^1$ Department of Computer Science, University of Bergamo,
-Dalmine 24044, Italy\\
-$^2$ Department of Computing and Electronic Systems, University of
-Essex Colchester CO43SQ, UK }
+$^1$ Department of Computer Science, University of Colorado at Boulder,
+430 UCB, Boulder, Colorado 80309-0430\\
+%$^2$ Department of Computing and Electronic Systems, University of
+%Essex Colchester CO43SQ, UK 
+}
 
 
 % The paper headers
@@ -104,24 +105,17 @@ Essex Colchester CO43SQ, UK }
 
 \IEEEcompsoctitleabstractindextext{%
 \begin{abstract}
-An abstract should be a concise summary of the
-significant items in the paper, including the results and
-conclusions. It should be not more than about 500 words. Define all nonstandard symbols,
-abbreviations and acronyms used in the abstract. Do not cite
-references in the abstract.
+As the capabilities and power of robotic motion planning software increases, the complexity and learning curve to new users also increases. 
 
-A list of significant keywords (2 minimum, 5 recommended) should
-be included in the first page of each submitted paper. Keywords
-must be chosen from those predefined within the IEEE RAS subject
-areas (\url{http://www.ieee-ras.org/uploads/tro/T-RO\_Keywords.pdf}) or
-the IEEE CS subsject area
-(\url{http://www.computer.org/portal/pages/ieeecs/publications/author/keywords/ACMtaxonomy.html}).
+Robotic motion planning involves a complex set of algorithms that requires many disparate fields of software engineering and robotic theory be synthesized together. Developing robot-agnostic software is another challenge that necessitates accounting for large variability in hardware designs and control paradigms. However, developing good software for these two requirements still does not help end users unless they can figure out how to use it. As robotics software gets more complex and powerful, it becomes increasingly difficult for users to get started with and customize the provided components as necessary for their particular application. In this paper a case study is presented for some of the best practices found for lowering the barrier of entry of the MoveIt motion planning software that allows users to 1) quickly get basic motion planning functionality right out of the box, 2) automate the configuration and optimization of the framework, 3) easily customize aspects of the toolchain, and 4) benchmark 
+the results of different configurations.
 
 \end{abstract}
 
 \begin{IEEEkeywords}
-Computer Society, JOSER, journal, \LaTeX, paper, template.
+Robotic Motion Planning, Frameworks, Barrier to Entry, Usability, MoveIt
 \end{IEEEkeywords}}
+
 
 
 % make the title area
@@ -131,225 +125,152 @@ Computer Society, JOSER, journal, \LaTeX, paper, template.
 \section{Introduction}
 % The very first letter is a 2 line initial drop letter followed
 % by the rest of the first word in caps.
-\IEEEPARstart{T}{he} {\sl Journal of Software Engineering for
-Robotics} (JOSER) is a peer-reviewed journal that publishes two
-issues a year in March and September. It aims at disseminating
-high quality scientific and technological research results in the
-area of robot software development. It publishes both empirical
-research papers, where the effectiveness in the Robotics domain of
-existing Software Engineering approaches and methods is evaluated
-and demonstrated, as well as theoretical contributions that
-present new Robotic-specific software development conceptual
-tools.
+\IEEEPARstart{M}{otion} {planning is a growing field of robotics that enables robots to move within their environment from one task or configuration to another. Its typical use case is the control of robotic arms from one location to another while taking into account the arm's reachability constraints, performing collision checking, and other constraints such as motion dynamics. 
 
-Possible topics for papers submitted to the journal include but
-are not limited to:
-\begin{itemize}
-    \item Analysis of issues and challenges in the development of robot software systems, that make the robotic domain similar/different to other application domains (e.g. automotive, factory automation)
-    \item Identification of recurrent concepts, aspects, and requirements in robot software systems, that may lead to the definition of standard / common / unified specifications, design models, interfaces, protocols, and software libraries
-    \item Documentation of measures and procedures to evaluate software quality factors
-    \item Description of conceptual tools as well as software environments that simplify the design, implementation, and reuse of robot software systems.
-    \item Exploitation of software engineering conceptual tools (e.g. formal specification and verification methods) to cope with specific robotic requirements (e.g. fault tolerance, robustness, autonomy, real-time guarantee)
-    \item Experience reports and case studies of successful development of software systems for real robotic applications.
-\end{itemize}
+The development of a motion planning framework involves combining many different fields of robotics and software engineering. Of particular importance is creating the structures and classes to share common data between the many different components. These basic data components include a model of a robot with collision bodies, a method for maintaining the state of the robot during planning and execution, and a method for maintaining the environment as perceived by the robot's sensors, henceforth referred to as the ''planning scene''. 
 
-These instructions give you guidelines for preparing papers for
-JOSER. Download the LaTeX template files from the website
-\url{http://www.joser.org/public/download/josertex.zip} so you can use the
-templates to prepare your manuscript.
+In addition to these basic common data structures, a motion planning framework requires many different functional components. Of primary importance is the motion planning module, which includes one or more algorithms suited for the solving the expected motion planning problems a robot might encounter. The field of motion planning algorithms is large and no one-size fits all solution exists yet, so a framework that is robot agnostic should likely include an assortment of algorithms. For more information on the selection of the proper algorithm for any particular planning problem, the reader is referred to [XX].
 
-\section{Editorial Policies}
-This journal provides immediate open access to its content on the
-principle that making research freely available to the public
-supports a greater global exchange of knowledge.
-Papers will be available on the JOSER Web portal as soon as they have been approved by the
-reviewers.
+Other primary functional components include the collision checking module, which should be as fast as possible for the geometric primitives and meshes in the planning scene and robot model. A forward kinematics solver is required to propagate the robot's geometry based on its joint positions and an inverse kinematics solver is required when planning in the configuration of an end effector. Also required is a component for taking into account other potential constraints, such as joint/velocity/torque limits, and stability requirements. 
 
-\subsection{Type of papers}
-Submitted articles may be of three basic types:
+Secondary components must also be integrated into a powerful motion planning framework. Depending on what configuration space a problem was solved in, a generated motion planning solution of position waypoints must be parameterized into a time-variant trajectory to be executed. A controller manager must decide the proper low level controllers for the necessary joints for each trajectory. Finally a perception interface must update the planning scene with recognized objects from a perception pipeline as well as optional raw sensor data.
 
-{\bf Regular papers}: Detailed discussion involving new
-research, applications or developments. There is no length limit
-on regular papers. The nominal length is 10 single-spaced, double
-column pages including figures and bibliography. However, it is
-recommended that papers not exceed 15 single-spaced, double column
-pages. Papers that exceed this recommended maximum length will
-still be considered, but might not be guaranteed editorial review
-or publication in a timely fashion.
-
-{\bf Short papers}: Brief presentations of new technical concepts
-and developments. Short papers should not exceed 6 single-spaced
-double column pages including figures and bibliography.
-
-{\bf Comments}: Comments are brief contributions that comment on
-previously published papers. These may include reports on
-
-\begin{itemize}
-    \item exploitation and validation of research results
-    \item interpretation of experimental data
-    \item opinions about open issues
-\end{itemize}
-Comments should equal 4 single-spaced double column pages (including reasonably sized figures and references).
+Higher level applications are then built on top of these motion planning components to coordinate more complex tasks, such as pick and place routines. Other optional components of a motion planning framework can include benchmarking tools, introspection and debug tools, as well as user-facing graphical user interfaces. 
 
 
-\subsection{Review criteria}
-Papers are reviewed and evaluated according to the following criteria.
-\begin{itemize}
-    \item Relevance. Descriptions of pure sensor processing, planning or control get a lower score than documentations of (1) software architectures that help to integrate these core aspects of robotics, (2) software requirements that have been taken into account (portability, reusability, maintainability, interoperability, etc.), (3) metrics and methods that allow to assess software quality factors of robotic systems, or (4) computational issues related to the implementation of robotics algorithms. Papers should report on what was learned in doing the work, rather than merely on what was done.
-    \item Significance. Descriptions of ad-hoc software library, framework, or middleware for specific robotic systems get a lower score that documentation of reuse/adaptation/reengineering of existing software artifacts. When appropriate, authors are encouraged to demonstrate the utility of their work on significant problems; any experiments reported should be     reproducible. Contributions to relevant standards, benchmarks, software patterns as well as their adoption in novel application contexts are positively evaluated.
-    \item Originality. The work cannot have been published previously or be pending publication in another journal, and submissions cannot be under review or be sent for review in any other journal. We will consider research that has been published, or is under consideration for publication at workshops or conferences. In these cases, we expect the JMLR submission to go into greater depth and extend the published results in a substantive way. Authors must notify JOSER about previous or pending conference publication at the time of submission.
-    \item Technical quality. Use of standard modeling languages (e.g. UML, SysML, Marte, AADL) is positively evaluated as well as motivation why existing standards are not sufficient for the authors’ purpose. All claims should be clearly articulated and supported either by empirical experiments or theoretical analyses.
-    \item Presentation. Papers must be concise and complete; manuscripts should be carefully proofread and polished. Submissions that do not meet these criteria may be returned unreviewed.
-\end{itemize}
+\subsection{Barriers to Entry}
 
-\subsection{Review process}
-JOSER has a commitment to rigorous yet rapid reviewing.
-\begin{enumerate}
-   \item When a paper is submitted to JOSER, it is first read by the Editor-in-Chief (EIC). If the EIC finds that the paper is very clearly below the standards of the journal or not in its scope, then the paper is rejected immediately, without written review.
-   \item The EIC then assigns the paper to an associated editor (AE) who has expertise in the area of the paper. If the AE finds that the paper is very likely to be rejected on full review, the AE will write a single short review explaining that position, and the paper will be rejected.
-   \item The AE then assigns the paper to three reviewers. The reviewers will include at least one specialist in Robotics area and at least one in Software Engineering. The reviewers will write detailed technical reviews of the paper, which are returned to the AE.
-   \item Possible decisions are Accept, Conditionally Accept, Revise and Resubmit, or Reject. Conditionally accepted papers may still require minor revisions, which will be checked by the AE. A resubmission reccomendation should not be interpreted as any sort of guarantee of acceptance upon resubmission.
-   \item Authors receive first notification of the publication decision within sixs weeks upon paper submission.
-\end{enumerate}
+The aforementioned components of a motion planning framework all require varying degrees of customization and optimization for any particular robot. Choosing the right parameters for each utilized algorithm and framework component typically involves expert human input using domain-specific knowledge. As the code base for a framework becomes more powerful, so too does its size and complexity. The ability for a novice user to have the breadth of knowledge to customize every aspect of the planning tool chain becomes insurmountable for most. Therefore, one of the emerging requirements of a robot agnostic motion planning framework is implementing mechanisms that will automatically setup and tune the pipeline for arbitrary robots.
 
-\section{Publication principles}
-It is a condition of publication that manuscripts submitted to
-JOSER are original and have not been published elsewhere in
-English or any other language. Do not submit a reworked version of
-a paper you have submitted or published elsewhere. It is the obligation of the
-authors to cite relevant prior work. The submitting author is
-responsible for obtaining agreement of all coauthors and any
-consent required from sponsors before submitting a paper. JOSER
-strongly discourage courtesy authorship. It is not the
-responsibility of the Editors to confirm that
-each author approves the paper as submitted or even knows that
-his or her name is attached to it. Responsibility for the contents
-of the paper rests upon the authors and not upon JOSER.
+Talk about paradox of active user?
 
-\section{Manuscript submission}
-Authors need to register with the journal prior to submitting, or if already registered can
-simply log in and begin the 5 step process.
-All submissions are acknowledged.
+Discuss methods to lower barrier of entry:
 
-% An example of a floating table. Note that the
-% \caption command should come BEFORE the table. Table text will default to
-% \footnotesize.
-% The \label must come after \caption.
-%
-\begin{table}[!t]
-\renewcommand{\arraystretch}{1.3}
-\caption{An Example of a Table}
-\label{table_example}
-\centering
-\begin{tabular}{|c||c|}
-\hline
-One & Two\\
-\hline
-Three & Four\\
-\hline
-\end{tabular}
-\end{table}
+Very easy to run / quick to setup demo (Hello World)
+User interface with well laid out user affordances
+Automatic generation of configuration files
+Reduction of Magic Numbers
+Auto-tuning of necessary parameters via algorithms
+Customization of specific components of the framework
+Benchmarking for quantitative results
 
-\subsection{Initial Submission}
-Articles must be submitted in PDF. Submissions should be typeset
-in 11 point font or larger, and should include all author contact
-information on the first page.
+\subsection{Benefits of Larger User Base}
 
-Although not required for submission, we encourage authors to use
-the JOSER LaTeX style package (described hereafter).
+This need to lower the barrier of entry is beneficial to the software itself in that it enables more users to utilize the framework. If the software is being sold for profit, the benefits of larger user base is obvious. If instead the software is a free open-source project, as most successful robotic frameworks have been [2], lowering the barrier to entry is also beneficial in that it creates a larger community of users. As the number of users increases, the speed in which bugs are identified and fixed increases. It is also hoped that development contributions to the code base increases, though this correlation is not as strong [3]. Additionally, one of the key strengths of a larger community for an open source project is increased participation of users assisting with quality assurance, documentation, and support [4].
 
-Articles may be accompanied by online supplemental material.
-(Note: if an online appendix contains source code, we will require
-you to sign a release form prior to publication freeing us from
-liability.)
+Another benefit of lowering the barrier of entry is its implications in educational and research applications?
 
-To submit a paper, please
-\begin{enumerate}
-   \item Prepare it in PDF.
-   \item Ensure that the file to be uploaded is less than 5Mb in size.
-   \item Ensure that the title page contains
-   \begin{itemize}
-          \item complete name, postal and e-mail address of the corresponding author;
-          \item an abstract that does not exceed 500 words
-          \item a list of minimum two keywords (five recommended)
-   \end{itemize}
-   \item Register, log in, and begin the 5 step process.
-\end{enumerate}
+\section{Related Work}
 
-\subsection{Camera-ready copies of accepted papers}
-To ensure that all articles published in the journal have a
-uniform appearance, all camera-ready copies of accepted papers are
-required to be typeset in LaTeX with the JOSER LaTeX style
-package.
+In this paper we will be using the new MoveIt Motion Planning Framework as our case study for barriers of entry to the usage of robotics software. There already exists a number of motion planning frameworks available today, both open and closed source. A quick survey of these software projects...
 
-Camera-ready copies of accepted papers which do not adhere to JOSER author guidelines WILL NOT be published. Authors must submit camera-ready papers as zip files that include:
-\begin{enumerate}
-    \item a single source file author\_yyyymmdd.tex; do not include external .tex files; use the submission date
-    \item the bibliography file author\_yyyymmdd.bib (only for BibTeX users)
-    \item the collection of figures as jpg or png files author\_yyyymmdd\_f01.jpg, \_f02.jpg, etc.
-    \item the output file author\_yyyymmdd.pdf
-\end{enumerate}
+OpenRave
+OOPSMP
+MPK - Motion Planning Kit
+Motion Strategy Library
+MoveIt [1]
 
+\section{MoveIt Motion Planning Framework}
 
-\section{Manuscript preparation}
-Manuscripts should include the following parts: title, authors$'$
-names, authors$'$ affiliations, abstract, keywords, text,
-acknowledgments (if necessary), collected references (e.g.
-~\cite{IJSEK1996:Stewart, SEER2007:Vaughan, ROBIO2006:Friedmann,
-SIMPAR2008:Petters} and ~\cite{JARS2006:Colon, IJAR2001:Zielinski,
-IEEE-TSE1997:Stewart, ICIAS2008:Spexard,
-IROS2003:Montemerlo}), short
-biography and the photographs of every author (above 600 dpi),
-tables and figures (above 600 dpi). Supplemental material should
-be briefly described in section "Appendixes".
+Details about Moveit
 
-\subsection{Abbreviations and acronyms}
-Define abbreviations and acronyms the first time they are used in
-the text, even after they have already been defined in the abstract
-or keywords. Abbreviations such as IEEE, SI, etc., do not have
-to be defined. Abbreviations that incorporate periods should not
-have spaces: write ``C.N.R.S.,'' not ``C.\ N.\ R.\ S.''
+ROS [cite]
 
+\section{Lowering the Barrier of Entry in MoveIt}
 
-\subsection{Figures and tables}
-Please verify that the figures and tables you mention in the text actually exist.
+The following features have been implemented in MoveIt with the motivation to attract as many users as possible. The results of these features on the size of the user base will be discussed in a later section.
 
-Every figure must have a caption that is complete and intelligible
-in itself without reference to the text.
+A. Basic Motion Planning Out of the Box
 
-The preferred format is jpg for figures
-with a minimum resolution of 600 dpi (dots per inch).
-The description style of the figures is specified as ``Time New
-Roman 8pt-12pt''. Figures can be in color or grayscale.
+1. MoveIt Setup Assistant
 
+One of the main features of MoveIt that has made it popular is its ratio of power and features to required setup time. A beginner to motion planning software can with very little effort take a kinematic model of an arbitrary articulated rigid body robot and execute motion plans in a virtual environment. With a few extra steps of setting up the correct hardware interfaces, one can then execute the motion plans on their actual robotic hardware.
+
+The main facility that provides out of the box support for beginners is the MoveIt Setup Assistant (SA). The SA is a graphical user interface that steps new users though the initial configuration requirements of using a custom robot with the motion planning framework (Figure 1). It accomplishes the task of automatically generating text-based configuration files necessary for the initial operation of MoveIt. These configurations include a self-collision matrix, planning group definitions, robot poses, end effector semantics, virtual joints, and passive joints. A three dimensional model of the robot being configured is displayed on the right side of the SA GUI and various links on the robot are highlighted during configuration to visually confirm the actions of the user.
+
+FIGURE 1: Screenshot of MoveIt Setup Assistant
+
+The required input for the SA is a robot model file, which currently accepts the Universal Robotic Description Format (URDF) [5] or Collada [6] file formats. These XML schemas describe the physical layout of a robot's link, joints, and other necessary modeling components. They can also combine appropriate 3D CAD meshes, collision models, dynamics, joint limits, sensors and other components. Using a properly formatted robot model file, MoveIt can automatically accomplish many of the required tasks in a motion planning framework including forward and inverse kinematics, collision checking, and joint limit enforcement.
+
+If one truly desired, the steps within the SA could almost entirely be automated themselves, but were kept manual so as to allow edge cases and unusual customizations to be accomplished.
+
+2. MoveIt Rviz Motion Planning Plugin
+
+The details of the automated configuration is left for the next section, but after the steps in the SA are completed the output is a ROS package containing a collection of configuration files and launch scripts (roslaunch files). The launch files include a demo script that will startup a visualization tool (rviz) with the new robot loaded and ready to run state of the art motion planning algorithms in non-physics based simulation. Using simple mouse-based interactive markers and the robot's various planning groups, the user can configure simple motion planning problems and quickly test the framework's capabilities.  
+
+An example demo task would be using the mouse to drag a robot end effector from a start position to a goal position around some virtual obstacle. Using another GUI - the MoveIt Rviz Motion Planning Plugin - the user can click the ?Plan? button and watch MoveIt effortlessly plan the arm in a collision free path around the obstacle (Figure 2).
+
+FIGURE 2: Screenshot of MoveIt Rviz Motion Planning Plugin
+
+It is important to emphasize the effect of a quick ?Getting Started? demo on a new user unaccustomed to MoveIt or motion planning frameworks in general. The reinforcement effect of initial success encourages the novice and enables them to start going deeper into the functionality and code base. If the entry barrier is too low, a new user will likely give up and turn to other frameworks or custom solutions rather than continue to blindly fix software that they have no experience in.
+
+3. Hardware Configuration and Execution
+
+Once the user is comfortable with the basic tools and features provided by MoveIt, the next step is to configure their robot's various actuators and control interfaces to accept trajectory commands from MoveIt. This step usually requires some custom coding to account for the specifics of the robot hardware - the communication bus, real-time requirements, and control theory implementations. At the abstract level, all MoveIt requires is that the robot hardware accepts a standard ROS trajectory message containing a discretized set of time-variant waypoints including desired positions, velocities, and accelerations. 
+
+B. Automate the configuration and optimization of the framework
+
+The size and complexity of a feature-rich motion planning framework like MoveIt requires many parameters and configurations of the software be automatically setup and tuned. MoveIt accomplishes this both in the setup phase of a new robot - using the Setup Assistant - and sometimes during the runtime of the application.
+
+1. Self Collision Matrix
+
+The second step of the SA is the generation of a self-collision matrix for the robot. This collision matrix encodes pairs of links on a robot that never need to be checked for self-collision due to the kinematic infeasibility of there actually being a collision. Reasons for having collision checking disabled between two links includes 1) links that can never reach each other kinematically, 2) adjoining links that are connected and so are by design in collision, and 3) links that are always in collision for any other reason including inaccuracies in the robot model and precision error. This self-collision matrix is generated by running the robot through tens of thousands of random joint configurations and recording statistics of each link's collision status. The algorithm then automatically populates a list of link pairs that have been determined to never need to be collision checked. This saves future motion planning runs time because it reduces the amount of collision checks that are required.
+
+2. Semantic Robotic Description Format
+
+The other six steps of the SA all provide graphical front ends for the data required to populate the semantic robotic description format (SRDF) file used by MoveIt. The SRDF provides meta data of the robot model useful to motion planning, such as which set of joints constitutes an arm and which set of links is considered part of the end effector. Requiring the user to configure all the required semantic information by hand in a text editor would be far more tedious and difficult than using an interface that populates the available options for each required field.
+
+The last step of the SA is to generate all launch scripts and configuration files. Not only does this step involve outputting to file the collected configurations during the step-by-step user interface, but it all generates a series of default configuration and launch files that are customized for the particular robot using the URDF and SRDF information. These defaults include the velocity and acceleration limits for each joint, the kinematic solvers for each planning group, the available planning algorithms and projection evaluators for planning. Default planning adapters are setup for pre and post-processing of motion plans, such as fixing slightly invalid start states and smoothing generated trajectories. Default benchmarking setups, controller and sensor manager scripts, and empty object databases are all generated. 
+
+3. Internal Optimization
+
+I think there are examples of this but Ioan knows more about this than I...
+
+C. Easily customize aspects of the toolchain
+
+Out of the box MoveIt lowers the barrier to entry by not requiring the user to provide their own implementation of any of the components in the motion planning framework. The Open Motion Planning Library (OMPL) [7] is configured as the default set of utilized planning algorithms. The Fast Collision Library (FCL) [8] is pre-configured as the collision checking component and the Orocos Kinematics and Dynamics Library (KDL) [9] is the default kinematics solver for kinematic chains. By default no perception components are configured
+
+All these default choices however are limiting to more advanced users who have their own research or application-specific needs to fulfil. All of the just mentioned components are setup using plugin interfaces that are shared objects loaded at run time. Using common plugin interfaces, MoveIt can easily be customized by user created plugins for any or all of the motion planning components.
+
+MoveIt is a plugin-centric framework that mostly avoids using message-passing inter-component communication, such as ROS messages. This decreases much of the latency delays inherent in message passing techniques and increases. The extensibility of the framework is greatly enhanced by not forcing users to use any particular algorithmic approach. Essentially, MoveIt provides a set of data sharing and synchronization tools, sharing between all components the robot's model and state.
+
+One plugin in particular that MoveIt reduces the barrier to entry for customization is the inverse kinematics plugin. The default KDL plugin uses numerical techniques to convert from an end effector to joint configuration space. A must faster solution can be achieved by configuring OpenRave's IKFast [10] plugin that analytically solves the inverse kinematics problem. A combination of MoveIt scripts and the IKFast Robot Kinematics Compiler automatically generates the C++ code and plugin needed to increase the speed of motion planning solutions by up to 3 orders of magnitude.
+
+D. Benchmark the results of different configurations
+
+Be able to configure and switch out motion planning algorithms and approaches is a powerful feature of MoveIt, but its usefulness is limited without the ability to quantify the results of any changes. Optimization criteria such as path length, planning time, smoothness, distance to nearest obstacle, and energy minimization need benchmarking tools to enable users and developers to find the correct set parameters and components for any given robotic application.
+
+MoveIt again provides a low barrier to entry for benchmarking with easy to create benchmarking configuration files that allow each test to be setup for comparison against other algorithms and values. Multivariable parameter sweeps for finding the optimal value for an algorithm's performance can be accomplished by simply supplying a upper and lower search value as well as an increment amount. Results can be output into generic formats for use in different plotting tools.
+
+\section{Results}
+
+Quantify MoveIt's popularity so far
+Released 05/06/2013
+Number of debian downloads? ask Tully to get this?
+163 users on the MoveIt mailing list
+Show plot of MoveIt posts over time
+Show plot of users on mailing list over time
+Show plots from https://www.ohloh.net/p/moveit
+
+\section{Usability Issues with MoveIt}
+
+There are still barriers to entry
+Setting up controllers is difficult
+Large code base is intimidating
+Built by one programmer so not the easiest layout
 
 
 \section{Conclusion}
-Typical functions of the conclusion of a scientific paper include 1)
-summing up, 2) a statement of conclusions, 3) a statement of
-recommendations, and 4) a graceful termination. Any one of these, or
-any combination, may be appropriate for a particular paper. Some
-papers do not need a separate concluding section, particularly if
-the conclusions have already been stated in the introduction.
-
-\section*{Supplemental material}
-JOSER accepts supplemental materials for review and publication with regular paper submissions.
-
-Types of supplemental material include:
-\begin{itemize}
-    \item proofs
-    \item code
-    \item experimental data
-    \item Graphics should be in JPEG, GIF, PNG, or TIFF format.
-    \item Movies/Animations: .MOV, .AVI, .QT. MPEG files acceptable, QuickTime 3 format preferred, under 4 minutes in length, 320x240 pixels. File size must be minimized and download time must be considered. We recommend files not exceed 30 MB. Files larger than this may be returned for modification to make them smaller.
-\end{itemize}
-
-If you intend to submit supplemental material, please describe it
-shortly in this section.
-
+Beyond the usual considerations in building a successful motion planning framework for robotics, an open source project that desires to maintain an active user base needs to take into account the barrier of entry to new users. As the algorithms become more complicated and the number of components and code base increases, configuring an arbitrary robot to utilize this framework becomes a daunting task requiring domain-specific expertise in a very large breadth of theory and implementation. To account for this, quick and easy initial configuration, with partially automated optimization, and easily extensible components for future customization are becoming a greater necessity in motion planning and robotic software engineering in general. 
 
 \section*{Acknowledgments}
 The authors would like to thank...
+
+Todo remove these ~\cite{IJSEK1996:Stewart, SEER2007:Vaughan, ROBIO2006:Friedmann,
+SIMPAR2008:Petters} and ~\cite{JARS2006:Colon, IJAR2001:Zielinski,
+IEEE-TSE1997:Stewart, ICIAS2008:Spexard,
+IROS2003:Montemerlo}), short
+
 
 
 % references section
