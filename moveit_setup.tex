@@ -110,7 +110,7 @@ $^1$ Department of Computer Science, University of Colorado at Boulder,
 
 \IEEEcompsoctitleabstractindextext{%
 \begin{abstract}
-Developing robot-agnostic motion planning software involves synthesizing many disparate fields of software engineering and robotic theory while at the same time accouting for a large variability in hardware designs and control paradigms. As the capabilities and power of robotic software increases, the complexity and learning curve to new users also increases. If the learning curve for applying and using the software on robots is too high, even the most powerful of motion planning frameworks is useless. A growing need exists in robotic software engineering to aid users in getting started with and customizing the provided components as necessary for particular robotic applications. In this paper a case study is presented for some of the best practices found for lowering the barrier of entry of the MoveIt motion planning framework that allows users to 1) quickly get basic motion planning functionality with very little initial setup, 2) automate the configuration and optimization of the framework, 3) easily customize aspects of the toolchain, and 4) benchmark the results of different configurations.
+Developing robot-agnostic motion planning software involves synthesizing many disparate fields of software engineering and robotic theory while at the same time accouting for a large variability in hardware designs and control paradigms. As the capabilities and power of robotic software increases, the complexity and learning curve to new users also increases. If the learning curve for applying and using the software on robots is too high, even the most powerful of motion planning frameworks is useless. A growing need exists in robotic software engineering to aid users in getting started with and customizing the provided components as necessary for particular robotic applications. In this paper a case study is presented for some of the best practices found for lowering the barrier of entry of the MoveIt motion planning framework that allows users to 1) quickly get basic motion planning functionality with very little initial setup, 2) automate the configuration and optimization of the framework where possible, 3) easily customize aspects of the toolchain, and 4) benchmark the results of different configurations.
 
 \end{abstract}
 
@@ -131,18 +131,30 @@ Robotic Motion Planning, Frameworks, Barrier to Entry, Setup, Usability, MoveIt
 
 \subsection{Barriers to Entry}
 
-The aforementioned components of a motion planning framework all require varying degrees of customization and optimization for any particular robot. Choosing the right parameters for each utilized algorithm and framework component typically involves expert human input using domain-specific knowledge. As the code base for a framework becomes more powerful, so too does its size and complexity. The ability for a novice user to have the breadth of knowledge to customize every aspect of the planning tool chain becomes insurmountable for most. Therefore, one of the emerging requirements of a robot agnostic motion planning framework is implementing mechanisms that will automatically setup and tune the pipeline for arbitrary robots.
+The term \textit{barriers to entry} is used here in the context of robotic software engineering to refer to the time, effort, and knowledge that a new user must invest in the integration of a software component to an arbitrary robot. This can include for example creating a virtual model of the robot's geometry and dynamics, customizing configuration files, choosing the fastest algorithmic approach for the application, and finding the best parameters for various algorithms. 
+
+Motion planning, and described in more detail later, requires many varying degrees of customization and optimization for any particular robot to operate properly. Choosing the right parameters for each utilized algorithm and software component typically involves expert human input using domain-specific knowledge. Many new users to a software package, particularly as robotics becomes more mainstream, will not have the breadth of knowledge to customize every aspect of the planning tool chain. When the knowledge of a new user is insuficient for the requirements of the software, the barriers to entry become insurmountable and the software unusable. One of the emerging requirements of a robot agnostic motion planning framework is implementing mechanisms that will automatically setup and tune the pipeline for arbitrary robots.
+
+Another motivation for lowering the barrier to entry of complex robotics software is the \textit{paradox of the active user}. This paradox explains a common observation in many user studies that \textit{users never read manuals} but start attempting to use the software immediatley \cite{carroll1987interfacing}.
+
+Even experts in the required fields 
 
 Talk about paradox of active user?
 
 Discuss methods to lower barrier of entry:
 
 Very easy to run / quick to setup demo (Hello World)
+
 User interface with well laid out user affordances
+
 Automatic generation of configuration files
+
 Reduction of Magic Numbers
+
 Auto-tuning of necessary parameters via algorithms
+
 Customization of specific components of the framework
+
 Benchmarking for quantitative results
 
 \subsection{Benefits of Larger User Base}
@@ -275,13 +287,6 @@ Beyond the usual considerations in building a successful motion planning framewo
 
 \section*{Acknowledgments}
 The authors would like to thank...
-
-Todo remove these ~\cite{IJSEK1996:Stewart, SEER2007:Vaughan, ROBIO2006:Friedmann,
-SIMPAR2008:Petters} and ~\cite{JARS2006:Colon, IJAR2001:Zielinski,
-IEEE-TSE1997:Stewart, ICIAS2008:Spexard,
-IROS2003:Montemerlo}), short
-
-
 
 % references section
 \bibliographystyle{IEEEtran}
