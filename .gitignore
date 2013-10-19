@@ -4,5 +4,8 @@ moveit_setup.blg
 moveit_setup.brf
 moveit_setup.log
 moveit_setup.out
-moveit_setup.pdf
 moveit_setup.tex~
+moveit_setup.tex.backup
+moveit_setup_bibliography.bib.backup
+moveit_setup_bibliography.bib~
+
