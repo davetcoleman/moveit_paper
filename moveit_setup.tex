@@ -68,7 +68,7 @@
 
 \begin{document}
 % paper title
-\title{Reducing the Barrier to Entry of \\\vskip 0.3\baselineskip Complex Robotic Motion Planning Software}
+\title{Reducing the Barrier to Entry of \\\vskip 0.3\baselineskip Complex Robotic Software}
 
 \author{
 David COLEMAN$^{1}$
@@ -110,12 +110,12 @@ $^1$ Department of Computer Science, University of Colorado at Boulder,
 
 \IEEEcompsoctitleabstractindextext{%
 \begin{abstract}
-Developing robot-agnostic motion planning software involves synthesizing many disparate fields of software engineering and robotic theory while at the same time accouting for a large variability in hardware designs and control paradigms. As the capabilities and power of robotic software increases, the complexity and learning curve to new users also increases. If the learning curve for applying and using the software on robots is too high, even the most powerful of motion planning frameworks is useless. A growing need exists in robotic software engineering to aid users in getting started with and customizing the provided components as necessary for particular robotic applications. In this paper a case study is presented for some of the best practices found for lowering the barrier of entry of the MoveIt motion planning framework that allows users to 1) quickly get basic motion planning functionality with very little initial setup, 2) automate the configuration and optimization of the framework where possible, 3) easily customize aspects of the toolchain, and 4) benchmark the results of different configurations.
+Developing robot-agnostic software frameworks involves synthesizing many disparate fields of software engineering and robotic theory while at the same time accounting for a large variability in hardware designs and control paradigms. As the capabilities and power of robotic software frameworks increases, the complexity and learning curve to new users also increases. If the learning curve for applying and using the software on robots is too high, even the most powerful of frameworks is useless. A growing need exists in robotic software engineering to aid users in getting started with and customizing the provided components as necessary for particular robotic applications. In this paper a case study is presented for some of the best practices found for lowering the barrier of entry of the MoveIt motion planning framework that allows users to 1) quickly get basic motion planning functionality with very little initial setup, 2) automate the configuration and optimization of the framework where possible, 3) easily customize aspects of the tool-chain, and 4) benchmark the results of different configurations. The approaches utilized for lowering the entry barrier are demonstrated and evaluated for their effectiveness to the users.
 
 \end{abstract}
 
 \begin{IEEEkeywords}
-Robotic Motion Planning, Frameworks, Barrier to Entry, Setup, Usability, MoveIt
+Robotic Software Frameworks, Motion Planning, Barrier to Entry, Setup, Usability, MoveIt
 \end{IEEEkeywords}}
 
 
@@ -127,60 +127,29 @@ Robotic Motion Planning, Frameworks, Barrier to Entry, Setup, Usability, MoveIt
 \section{Introduction}
 % The very first letter is a 2 line initial drop letter followed
 % by the rest of the first word in caps.
-\IEEEPARstart{M}{anaging} {the increasing complexity of modern robotic software is a difficult engineering challenge faced by roboticists today. The size of the code bases of common open source robotic software frameworks such as ROS \cite{quigley2009ros} and OROCOS \cite{bruyninckx2001open} are swelling \cite{makarenko2007benefits}, and the reqired breadth of knowledge for understanding the deep stack of software from control drivers to high level planners is increasing in formidablity. As it is beyond the capabilities for any one researcher to have the necessary domain knowledge for every aspect of a robot's tool chain, it is necessary to assist users in the configuration, customization, and optimization of the various software components of a robotic framework. 
+\IEEEPARstart{M}{anaging} {the increasing complexity of modern robotic software is a difficult engineering challenge faced by roboticists today. The size of the code bases of common open source robotic software frameworks such as ROS \cite{quigley2009ros}, MoveIt \cite{MoveIt} and OROCOS \cite{bruyninckx2001open} are swelling \cite{makarenko2007benefits}, and the required breadth of knowledge for understanding the deep stack of software from control drivers to high level planners is increasing in formidability. As it is beyond the capabilities for any one researcher to have the necessary domain knowledge for every aspect of a robot's tool chain, it is necessary to assist users in the configuration, customization, and optimization of the various software components of a robotic framework. 
 
 \subsection{Barriers to Entry}
 
 The term \textit{barriers to entry} is used here in the context of robotic software engineering to refer to the time, effort, and knowledge that a new user must invest in the integration of a software component to an arbitrary robot. This can include for example creating a virtual model of the robot's geometry and dynamics, customizing configuration files, choosing the fastest algorithmic approach for the application, and finding the best parameters for various algorithms. 
 
-Motion planning, and described in more detail later, requires many varying degrees of customization and optimization for any particular robot to operate properly. Choosing the right parameters for each utilized algorithm and software component typically involves expert human input using domain-specific knowledge. Many new users to a software package, particularly as robotics becomes more mainstream, will not have the breadth of knowledge to customize every aspect of the planning tool chain. When the knowledge of a new user is insuficient for the requirements of the software, the barriers to entry become insurmountable and the software unusable. One of the emerging requirements of a robot agnostic motion planning framework is implementing mechanisms that will automatically setup and tune the pipeline for arbitrary robots.
+Powerful robotics software generally requires many varying degrees of customization and optimization for any particular robot to operate properly. Choosing the right parameters for each utilized algorithm and software component typically involves expert human input using domain-specific knowledge. Many new users to a software package, particularly as robotics becomes more mainstream, will not have the breadth of knowledge to customize every aspect of the tool chain. When the knowledge of a new user is insufficient for the requirements of the software, the barriers to entry become insurmountable and the software unusable. One of the emerging requirements of a robot agnostic frameworks is implementing mechanisms that will automatically setup and tune the pipeline for arbitrary robots.
 
-Another motivation for lowering the barrier to entry of complex robotics software is the \textit{paradox of the active user}. This paradox explains a common observation in many user studies that \textit{users never read manuals} but start attempting to use the software immediatley \cite{carroll1987interfacing}.
+Another motivation for lowering the barrier to entry of complex robotics software is the \textit{paradox of the active user}. This paradox explains a common observation in many user studies that \textit{users never read manuals} but start attempting to use the software immediately \cite{carroll1987interfacing}. A user's desire to quickly accomplish a task results in them skipping reading any provided documentation or gaining deeper understanding of the system and instead diving right into completing their task. The \textit{paradox} is that the user would actually save time in the long run if they learned more about the system before attempting to use it, but from these studies it was that shown that in reality people do not tend to invest time upfront into learning a new system.
 
-Even experts in the required fields 
+Paragraph on the need for quick start guides? Cite a paper on ''hello world'' type applications?
 
-Talk about paradox of active user?
-
-Discuss methods to lower barrier of entry:
-
-Very easy to run / quick to setup demo (Hello World)
-
-User interface with well laid out user affordances
-
-Automatic generation of configuration files
-
-Reduction of Magic Numbers
-
-Auto-tuning of necessary parameters via algorithms
-
-Customization of specific components of the framework
-
-Benchmarking for quantitative results
+Even experts in the area of the associated robotics software will become frustrated if all initial attempts to setup and configure the framework fails and no progress is made. Researchers and engineers today do not have the time or ability to completely understand the entirety of robotics software before they start using it. It is very important for the first experience of the user with a piece of software be positive for the continued use of the software by the user.
 
 \subsection{Benefits of Larger User Base}
 
-This need to lower the barrier of entry is beneficial to the software itself in that it enables more users to utilize the framework. If the software is being sold for profit, the benefits of larger user base is obvious. If instead the software is a free open-source project, as most successful robotic frameworks have been [2], lowering the barrier to entry is also beneficial in that it creates a larger community of users. As the number of users increases, the speed in which bugs are identified and fixed increases. It is also hoped that development contributions to the code base increases, though this correlation is not as strong [3]. Additionally, one of the key strengths of a larger community for an open source project is increased participation of users assisting with quality assurance, documentation, and support [4].
+The need to lower the barrier of entry is beneficial to the software itself in that it enables more users to utilize the framework. If the software framework is being sold for profit, the benefits of larger user base is obvious. If instead the software is a free open-source project, as most successful robotic frameworks currently are \cite{makarenko2007benefits}, lowering the barrier to entry is also beneficial in that it creates a larger community of users. As the number of users increases, the speed in which bugs are identified and fixed increases. It is also typically hoped that development contributions to the code base increases, though this correlation is not as strong \cite{schmidt1999software}. Additionally, one of the key strengths of a larger community for an open source project is increased participation of users assisting with quality assurance, documentation, and support \cite{schmidt2001leveraging}.
 
-Another benefit of lowering the barrier of entry is its implications in educational and research applications?
+Another benefit of lowering the barrier of entry is it allows the robotics software to additionally become an educational tool for robotics. Not only is the software accessible for academic research and industrial applications, but undergraduate and even primary school students can use it learn some of the higher level concepts of robotic applications as has been demonstrated in \cite{correll2013one, moll2011teaching}. This should not be the main focus of most robotics software, but a nice side effect.
 
-\subsection{Motion Planning}
+\subsection{Related Work}
 
-Motion planning is a growing field of robotics that enables robots to move within their environment from one task or configuration to another. Its typical use case is the control of robotic arms from one location to another while taking into account the arm's reachability constraints, performing collision checking, and other constraints such as motion dynamics. 
-
-The development of a motion planning framework involves combining many different fields of robotics and software engineering. Of particular importance is creating the structures and classes to share common data between the many different components. These basic data components include a model of a robot with collision bodies, a method for maintaining the state of the robot during planning and execution, and a method for maintaining the environment as perceived by the robot's sensors, henceforth referred to as the ''planning scene''. 
-
-In addition to these basic common data structures, a motion planning framework requires many different functional components. Of primary importance is the motion planning module, which includes one or more algorithms suited for the solving the expected motion planning problems a robot might encounter. The field of motion planning algorithms is large and no one-size fits all solution exists yet, so a framework that is robot agnostic should likely include an assortment of algorithms. For more information on the selection of the proper algorithm for any particular planning problem, the reader is referred to [XX].
-
-Other primary functional components include the collision checking module, which should be as fast as possible for the geometric primitives and meshes in the planning scene and robot model. A forward kinematics solver is required to propagate the robot's geometry based on its joint positions and an inverse kinematics solver is required when planning in the configuration of an end effector. Also required is a component for taking into account other potential constraints, such as joint/velocity/torque limits, and stability requirements. 
-
-Secondary components must also be integrated into a powerful motion planning framework. Depending on what configuration space a problem was solved in, a generated motion planning solution of position waypoints must be parameterized into a time-variant trajectory to be executed. A controller manager must decide the proper low level controllers for the necessary joints for each trajectory. Finally a perception interface must update the planning scene with recognized objects from a perception pipeline as well as optional raw sensor data.
-
-Higher level applications are then built on top of these motion planning components to coordinate more complex tasks, such as pick and place routines. Other optional components of a motion planning framework can include benchmarking tools, introspection and debug tools, as well as user-facing graphical user interfaces. 
-
-
-\section{Related Work}
-
-There has been much written and developed to addressed these issues in robotics, but typically the identified design goals for robotic software engineering have emphasized the need for platform independence, scalability, real-time performance, software reuse, and distributed layouts \cite{realtime_framework, collett2005player, kramer2007development}. In \cite{kramer2007development}'s survey of nine open source robotic development environments, a collection of metrics were used which included documentation and graphical interfaces, but no mention was made of setup time, barrier to entry, or automated configuration. 
+There has been much written and developed to addressed the software engineering challenges of complex robotic frameworks, but typically the identified design goals have emphasized the need for properties such as platform independence, scalability, real-time performance, software reuse, and distributed layouts \cite{realtime_framework, collett2005player, kramer2007development}. In \cite{kramer2007development}'s survey of nine open source robotic development environments, a collection of metrics were used which included documentation and graphical interfaces, but no mention was made of setup time, barrier to entry, or automated configuration. 
 
 In this paper we will be using the new MoveIt Motion Planning Framework as our case study for barriers of entry to the usage of robotics software. There already exists a number of motion planning frameworks available today, both open and closed source. A quick survey of these software projects...
 
@@ -194,9 +163,20 @@ MoveIt [1]
 
 Details about Moveit
 
-ROS [cite] sdas
+\subsection{Motion Planning}
 
-asdasdas asd asd asdasdasd asd as
+Motion planning is a growing field of robotics that enables robots to move within their environment from one task or configuration to another. Its typical use case is the control of robotic arms from one location to another while taking into account the arm's reachability constraints, performing collision checking, and other constraints such as motion dynamics. 
+
+The development of a motion planning framework involves combining many different fields of robotics and software engineering. Of particular importance is creating the structures and classes to share common data between the many different components. These basic data components include a model of a robot with collision bodies, a method for maintaining the state of the robot during planning and execution, and a method for maintaining the environment as perceived by the robot's sensors, henceforth referred to as the ''planning scene''. 
+
+In addition to these basic common data structures, a motion planning framework requires many different functional components. Of primary importance is the motion planning module, which includes one or more algorithms suited for the solving the expected motion planning problems a robot might encounter. The field of motion planning algorithms is large and no one-size fits all solution exists yet, so a framework that is robot agnostic should likely include an assortment of algorithms. For more information on the selection of the proper algorithm for any particular planning problem, the reader is referred to [XX].
+
+Other primary functional components include the collision checking module, which should be as fast as possible for the geometric primitives and meshes in the planning scene and robot model. A forward kinematics solver is required to propagate the robot's geometry based on its joint positions and an inverse kinematics solver is required when planning in the configuration of an end effector. Also required is a component for taking into account other potential constraints, such as joint/velocity/torque limits, and stability requirements. 
+
+Secondary components must also be integrated into a powerful motion planning framework. Depending on what configuration space a problem was solved in, a generated motion planning solution of position way points must be parameterized into a time-variant trajectory to be executed. A controller manager must decide the proper low level controllers for the necessary joints for each trajectory. Finally a perception interface must update the planning scene with recognized objects from a perception pipeline as well as optional raw sensor data.
+
+Higher level applications are then built on top of these motion planning components to coordinate more complex tasks, such as pick and place routines. Other optional components of a motion planning framework can include benchmarking tools, introspection and debug tools, as well as user-facing graphical user interfaces. 
+
 
 \section{Lowering the Barrier of Entry}
 
