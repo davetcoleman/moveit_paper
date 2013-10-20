@@ -137,7 +137,7 @@ Powerful robotics software generally requires many varying degrees of customizat
 
 Another motivation for lowering the barrier to entry of complex robotics software is the \textit{paradox of the active user}. This paradox explains a common observation in many user studies that \textit{users never read manuals} but start attempting to use the software immediately \cite{carroll1987interfacing}. A user's desire to quickly accomplish a task results in them skipping reading any provided documentation or gaining deeper understanding of the system and instead diving right into completing their task. The \textit{paradox} is that the user would actually save time in the long run if they learned more about the system before attempting to use it, but from these studies it was that shown that in reality people do not tend to invest time upfront into learning a new system.
 
-Paragraph on the need for quick start guides? Cite a paper on ''hello world'' type applications?
+TODO: Paragraph on the need for quick start guides? Cite a paper on ''hello world'' type applications?
 
 Even experts in the area of the associated robotics software will become frustrated if all initial attempts to setup and configure the framework fails and no progress is made. Researchers and engineers today do not have the time or ability to completely understand the entirety of robotics software before they start using it. It is very important for the first experience of the user with a piece of software be positive for the continued use of the software by the user.
 
@@ -149,44 +149,58 @@ Another benefit of lowering the barrier of entry is it allows the robotics softw
 
 \subsection{Related Work}
 
-There has been much written and developed to addressed the software engineering challenges of complex robotic frameworks, but typically the identified design goals have emphasized the need for properties such as platform independence, scalability, real-time performance, software reuse, and distributed layouts \cite{realtime_framework, collett2005player, kramer2007development}. In \cite{kramer2007development}'s survey of nine open source robotic development environments, a collection of metrics were used which included documentation and graphical interfaces, but no mention was made of setup time, barrier to entry, or automated configuration. 
+There has been much written and developed to addressed the software engineering challenges of complex robotic frameworks, but typically the identified design goals have emphasized the need for properties such as platform independence, scalability, real-time performance, software reuse, and distributed layouts \cite{realtime_framework, collett2005player, kramer2007development}. In \cite{kramer2007development}'s survey of nine open source robotic development environments, a collection of metrics were used which included documentation and graphical interfaces, but no mention was made of setup time, barrier to entry, or automated configuration. CITE MORE RELATED WORK
 
-In this paper we will be using the new MoveIt Motion Planning Framework as our case study for barriers of entry to the usage of robotics software. There already exists a number of motion planning frameworks available today, both open and closed source. A quick survey of these software projects...
+\subsection{Objectives}
 
-OpenRave
-OOPSMP
-MPK - Motion Planning Kit
-Motion Strategy Library
-MoveIt [1]
+In this paper we will be using the new MoveIt Motion Planning Framework as our case study for barriers of entry to the usage of robotics software. In section \ref{sec::motion_planning} we will discuss the many software components that make motion planning frameworks a good example of the difficulties of complex robotics software. In section \ref{sec::moveit} we will introduce MoveIt, in section \ref{sec::lowering_barriers} the methods under taken in MoveIt to reduce the entry barriers will be discussed, and in section \ref{sec::results} we will present the results of our experience in attempting to make MoveIt an easier software framework to use.
 
-\section{MoveIt Motion Planning Framework}
+\section{Motion Planning Frameworks}
+\label{sec::motion_planning}
 
-Details about Moveit
+Robotic motion planning is a maturing and central field in robotics \cite{moll2011teaching} that translates a task into a series of discrete motions such that a robot can move within its environment. The typical use case that will be used as an example in this paper is the problem of controlling a robotic arm from one configuration to another while taking into account various constraints.
 
-\subsection{Motion Planning}
+The software development of a motion planning framework involves combining many disparate fields of robotics and software engineering. We refer to the software as a \textit{framework} in this context because it abstracts the various components of motion planning into generic interfaces as discussed later.
 
-Motion planning is a growing field of robotics that enables robots to move within their environment from one task or configuration to another. Its typical use case is the control of robotic arms from one location to another while taking into account the arm's reachability constraints, performing collision checking, and other constraints such as motion dynamics. 
+One of the most important features of a framework for motion planning is providing the structures and classes to share common data between the different components. These basic data structures include a model of a robot with its collision bodies, a method for maintaining the state of the robot during planning and execution, and a method for maintaining the environment as perceived by the robot's sensors (''planning scene'').
 
-The development of a motion planning framework involves combining many different fields of robotics and software engineering. Of particular importance is creating the structures and classes to share common data between the many different components. These basic data components include a model of a robot with collision bodies, a method for maintaining the state of the robot during planning and execution, and a method for maintaining the environment as perceived by the robot's sensors, henceforth referred to as the ''planning scene''. 
+In addition to the common data structures, a motion planning framework requires many different algorithmic components. The motion planning component itself includes one or more algorithms suited for the solving the expected planning problems a robot will encounter. The field of motion planning algorithms is large and no one-size fits all solution exists yet, so a framework that is robot agnostic should likely include an assortment of algorithms.
 
-In addition to these basic common data structures, a motion planning framework requires many different functional components. Of primary importance is the motion planning module, which includes one or more algorithms suited for the solving the expected motion planning problems a robot might encounter. The field of motion planning algorithms is large and no one-size fits all solution exists yet, so a framework that is robot agnostic should likely include an assortment of algorithms. For more information on the selection of the proper algorithm for any particular planning problem, the reader is referred to [XX].
-
-Other primary functional components include the collision checking module, which should be as fast as possible for the geometric primitives and meshes in the planning scene and robot model. A forward kinematics solver is required to propagate the robot's geometry based on its joint positions and an inverse kinematics solver is required when planning in the configuration of an end effector. Also required is a component for taking into account other potential constraints, such as joint/velocity/torque limits, and stability requirements. 
+Other primary components include a collision checking module that detects the intersection of geometric primitives and meshes in the planning scene and robot model. A forward kinematics solver is required to propagate the robot's geometry based on its joint positions, and an inverse kinematics solver is required when planning in the configuration of an end effector. Other potential constraints, such as joint/velocity/torque limits, and stability requirements, require additional components.
 
 Secondary components must also be integrated into a powerful motion planning framework. Depending on what configuration space a problem was solved in, a generated motion planning solution of position way points must be parameterized into a time-variant trajectory to be executed. A controller manager must decide the proper low level controllers for the necessary joints for each trajectory. Finally a perception interface must update the planning scene with recognized objects from a perception pipeline as well as optional raw sensor data.
 
 Higher level applications are then built on top of these motion planning components to coordinate more complex tasks, such as pick and place routines. Other optional components of a motion planning framework can include benchmarking tools, introspection and debug tools, as well as user-facing graphical user interfaces. 
 
+There already exists a number of motion planning frameworks available today, both open and closed source. A quick survey of these software projects... TODO SURVEY
 
-\section{Lowering the Barrier of Entry}
+\begin{itemize}
+    \item OpenRave
+    \item OOPSMP
+    \item MPK - Motion Planning Kit
+    \item Motion Strategy Library
+    \item MoveIt
+\end{itemize}
+
+\section{MoveIt Motion Planning Framework}
+\label{sec::moveit}
+
+MoveIt is the primary motion planning framework in ROS and has been successfully integrated with many robots including the PR2 \cite{wyrobek2008towards}, Robotnaut \cite{ambrose2000robonaut}, Baxter, and Atlas. It is written entirely in C++ but includes Python bindings for higher level scripting. It follows the principle of software reuse as advocated for robotics in \cite{makarenko2007benefits} of not tying itself exclusively to one robotic framework - in our case ROS - by creating a formal separation between core functionality and the framework-dependent aspects. 
+
+By default the MoveIt Motion Planning Framework using the Open Motion Planning Library (OMPL) \cite{sucan2012the-open-motion-planning-library} for planning, the Fast Collision Library (FCL) \cite{fcl} for collision checking, and the OROCOS Kinematics and Dynamics Library (KDL) \cite{bruyninckx2001open} for forward and inverse kinematics. 
+
+MoveIt is fast and can generate complete pick and place plans for a typical robotic arm in BENCHMARK TIME in preliminary experiments on an 64 bit Ubuntu 12.04 PC with a 3.6Ghz Intal Core i7 processor and 16 GB ram.
+
+THINK OF MORE THINGS TO SAY
+
+\section{Methods to Lower The Entry Barrier}
+\label{sec::lowering_barriers}
 
 The following features have been implemented in MoveIt with the motivation to attract as many users as possible. The results of these features on the size of the user base will be discussed in a later section.
 
-A. Basic Motion Planning Out of the Box
+\subsection{Basic Motion Planning Out of the Box}
 
-1. MoveIt Setup Assistant
-
-One of the main features of MoveIt that has made it popular is its ratio of power and features to required setup time. A beginner to motion planning software can with very little effort take a kinematic model of an arbitrary articulated rigid body robot and execute motion plans in a virtual environment. With a few extra steps of setting up the correct hardware interfaces, one can then execute the motion plans on their actual robotic hardware.
+{\bf MoveIt Setup Assistant}: One of the main features of MoveIt that has made it popular is its ratio of power and features to required setup time. A beginner to motion planning software can with very little effort take a kinematic model of an arbitrary articulated rigid body robot and execute motion plans in a virtual environment. With a few extra steps of setting up the correct hardware interfaces, one can then execute the motion plans on their actual robotic hardware.
 
 The main facility that provides out of the box support for beginners is the MoveIt Setup Assistant (SA). The SA is a graphical user interface that steps new users though the initial configuration requirements of using a custom robot with the motion planning framework (Figure 1). It accomplishes the task of automatically generating text-based configuration files necessary for the initial operation of MoveIt. These configurations include a self-collision matrix, planning group definitions, robot poses, end effector semantics, virtual joints, and passive joints. A three dimensional model of the robot being configured is displayed on the right side of the SA GUI and various links on the robot are highlighted during configuration to visually confirm the actions of the user.
 
@@ -196,9 +210,7 @@ The required input for the SA is a robot model file, which currently accepts the
 
 If one truly desired, the steps within the SA could almost entirely be automated themselves, but were kept manual so as to allow edge cases and unusual customizations to be accomplished.
 
-2. MoveIt Rviz Motion Planning Plugin
-
-The details of the automated configuration is left for the next section, but after the steps in the SA are completed the output is a ROS package containing a collection of configuration files and launch scripts (roslaunch files). The launch files include a demo script that will startup a visualization tool (rviz) with the new robot loaded and ready to run state of the art motion planning algorithms in non-physics based simulation. Using simple mouse-based interactive markers and the robot's various planning groups, the user can configure simple motion planning problems and quickly test the framework's capabilities.  
+{\bf MoveIt Rviz Motion Planning Plugin}: The details of the automated configuration is left for the next section, but after the steps in the SA are completed the output is a ROS package containing a collection of configuration files and launch scripts (roslaunch files). The launch files include a demo script that will startup a visualization tool (rviz) with the new robot loaded and ready to run state of the art motion planning algorithms in non-physics based simulation. Using simple mouse-based interactive markers and the robot's various planning groups, the user can configure simple motion planning problems and quickly test the framework's capabilities.  
 
 An example demo task would be using the mouse to drag a robot end effector from a start position to a goal position around some virtual obstacle. Using another GUI - the MoveIt Rviz Motion Planning Plugin - the user can click the ?Plan? button and watch MoveIt effortlessly plan the arm in a collision free path around the obstacle (Figure 2).
 
@@ -206,29 +218,21 @@ FIGURE 2: Screenshot of MoveIt Rviz Motion Planning Plugin
 
 It is important to emphasize the effect of a quick ?Getting Started? demo on a new user unaccustomed to MoveIt or motion planning frameworks in general. The reinforcement effect of initial success encourages the novice and enables them to start going deeper into the functionality and code base. If the entry barrier is too low, a new user will likely give up and turn to other frameworks or custom solutions rather than continue to blindly fix software that they have no experience in.
 
-3. Hardware Configuration and Execution
+{\bf Hardware Configuration and Execution}: Once the user is comfortable with the basic tools and features provided by MoveIt, the next step is to configure their robot's various actuators and control interfaces to accept trajectory commands from MoveIt. This step usually requires some custom coding to account for the specifics of the robot hardware - the communication bus, real-time requirements, and control theory implementations. At the abstract level, all MoveIt requires is that the robot hardware accepts a standard ROS trajectory message containing a discretized set of time-variant waypoints including desired positions, velocities, and accelerations. 
 
-Once the user is comfortable with the basic tools and features provided by MoveIt, the next step is to configure their robot's various actuators and control interfaces to accept trajectory commands from MoveIt. This step usually requires some custom coding to account for the specifics of the robot hardware - the communication bus, real-time requirements, and control theory implementations. At the abstract level, all MoveIt requires is that the robot hardware accepts a standard ROS trajectory message containing a discretized set of time-variant waypoints including desired positions, velocities, and accelerations. 
-
-B. Automate the configuration and optimization of the framework
+\subsection{Automate configuration and optimization}
 
 The size and complexity of a feature-rich motion planning framework like MoveIt requires many parameters and configurations of the software be automatically setup and tuned. MoveIt accomplishes this both in the setup phase of a new robot - using the Setup Assistant - and sometimes during the runtime of the application.
 
-1. Self Collision Matrix
+{\bf Self Collision Matrix}: The second step of the SA is the generation of a self-collision matrix for the robot. This collision matrix encodes pairs of links on a robot that never need to be checked for self-collision due to the kinematic infeasibility of there actually being a collision. Reasons for having collision checking disabled between two links includes 1) links that can never reach each other kinematically, 2) adjoining links that are connected and so are by design in collision, and 3) links that are always in collision for any other reason including inaccuracies in the robot model and precision error. This self-collision matrix is generated by running the robot through tens of thousands of random joint configurations and recording statistics of each link's collision status. The algorithm then automatically populates a list of link pairs that have been determined to never need to be collision checked. This saves future motion planning runs time because it reduces the amount of collision checks that are required.
 
-The second step of the SA is the generation of a self-collision matrix for the robot. This collision matrix encodes pairs of links on a robot that never need to be checked for self-collision due to the kinematic infeasibility of there actually being a collision. Reasons for having collision checking disabled between two links includes 1) links that can never reach each other kinematically, 2) adjoining links that are connected and so are by design in collision, and 3) links that are always in collision for any other reason including inaccuracies in the robot model and precision error. This self-collision matrix is generated by running the robot through tens of thousands of random joint configurations and recording statistics of each link's collision status. The algorithm then automatically populates a list of link pairs that have been determined to never need to be collision checked. This saves future motion planning runs time because it reduces the amount of collision checks that are required.
-
-2. Semantic Robotic Description Format
-
-The other six steps of the SA all provide graphical front ends for the data required to populate the semantic robotic description format (SRDF) file used by MoveIt. The SRDF provides meta data of the robot model useful to motion planning, such as which set of joints constitutes an arm and which set of links is considered part of the end effector. Requiring the user to configure all the required semantic information by hand in a text editor would be far more tedious and difficult than using an interface that populates the available options for each required field.
+{\bf Semantic Robotic Description Format}: The other six steps of the SA all provide graphical front ends for the data required to populate the semantic robotic description format (SRDF) file used by MoveIt. The SRDF provides meta data of the robot model useful to motion planning, such as which set of joints constitutes an arm and which set of links is considered part of the end effector. Requiring the user to configure all the required semantic information by hand in a text editor would be far more tedious and difficult than using an interface that populates the available options for each required field.
 
 The last step of the SA is to generate all launch scripts and configuration files. Not only does this step involve outputting to file the collected configurations during the step-by-step user interface, but it all generates a series of default configuration and launch files that are customized for the particular robot using the URDF and SRDF information. These defaults include the velocity and acceleration limits for each joint, the kinematic solvers for each planning group, the available planning algorithms and projection evaluators for planning. Default planning adapters are setup for pre and post-processing of motion plans, such as fixing slightly invalid start states and smoothing generated trajectories. Default benchmarking setups, controller and sensor manager scripts, and empty object databases are all generated. 
 
-3. Internal Optimization
+{\bf Internal Optimization}: I think there are examples of this but Ioan knows more about this than I...
 
-I think there are examples of this but Ioan knows more about this than I...
-
-C. Easily customize aspects of the toolchain
+\subsection{Easily customize aspects of the toolchain}
 
 Out of the box MoveIt lowers the barrier to entry by not requiring the user to provide their own implementation of any of the components in the motion planning framework. The Open Motion Planning Library (OMPL) [7] is configured as the default set of utilized planning algorithms. The Fast Collision Library (FCL) [8] is pre-configured as the collision checking component and the Orocos Kinematics and Dynamics Library (KDL) [9] is the default kinematics solver for kinematic chains. By default no perception components are configured
 
@@ -238,13 +242,14 @@ MoveIt is a plugin-centric framework that mostly avoids using message-passing in
 
 One plugin in particular that MoveIt reduces the barrier to entry for customization is the inverse kinematics plugin. The default KDL plugin uses numerical techniques to convert from an end effector to joint configuration space. A must faster solution can be achieved by configuring OpenRave's IKFast [10] plugin that analytically solves the inverse kinematics problem. A combination of MoveIt scripts and the IKFast Robot Kinematics Compiler automatically generates the C++ code and plugin needed to increase the speed of motion planning solutions by up to 3 orders of magnitude.
 
-D. Benchmark the results of different configurations
+\subsection{Benchmark the results of different configurations}
 
 Be able to configure and switch out motion planning algorithms and approaches is a powerful feature of MoveIt, but its usefulness is limited without the ability to quantify the results of any changes. Optimization criteria such as path length, planning time, smoothness, distance to nearest obstacle, and energy minimization need benchmarking tools to enable users and developers to find the correct set parameters and components for any given robotic application.
 
 MoveIt again provides a low barrier to entry for benchmarking with easy to create benchmarking configuration files that allow each test to be setup for comparison against other algorithms and values. Multivariable parameter sweeps for finding the optimal value for an algorithm's performance can be accomplished by simply supplying a upper and lower search value as well as an increment amount. Results can be output into generic formats for use in different plotting tools.
 
 \section{Results}
+\label{sec::results}
 
 Quantify MoveIt's popularity so far
 Released 05/06/2013
@@ -254,7 +259,8 @@ Show plot of MoveIt posts over time
 Show plot of users on mailing list over time
 Show plots from https://www.ohloh.net/p/moveit
 
-\section{Usability Issues with MoveIt}
+\section{Remaining Issues}
+\label{sec::issues}
 
 There are still barriers to entry
 Setting up controllers is difficult

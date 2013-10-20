@@ -4,5 +4,4 @@ rm moveit_setup.blg
 rm moveit_setup.brf
 rm moveit_setup.log
 rm moveit_setup.out
-rm moveit_setup.pdf
 rm moveit_setup.tex~
