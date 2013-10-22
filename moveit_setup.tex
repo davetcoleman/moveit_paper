@@ -154,7 +154,7 @@ Another benefit of lowering the barrier of entry is it allows the robotics softw
 
 \subsection{Related Work}
 
-There has been much written and developed to addressed the software engineering challenges of complex robotic frameworks, but typically the identified design goals have emphasized the need for properties such as platform independence, scalability, real-time performance, software reuse, and distributed layouts \cite{realtime_framework, collett2005player, kramer2007development}. In \cite{kramer2007development}'s survey of nine open source robotic development environments, a collection of metrics were used which included documentation and graphical interfaces, but no mention was made of setup time, barrier to entry, or automated configuration. CITE MORE RELATED WORK
+There has been much written and developed to addressed the software engineering challenges of complex robotic frameworks, but typically the identified design goals have emphasized the need for properties such as platform independence, scalability, real-time performance, software reuse, and distributed layouts \cite{realtime_framework, collett2005player, kramer2007development}. In \cite{kramer2007development}'s survey of nine open source robotic development environments, a collection of metrics were used which included documentation and graphical user interfaces (GUI), but no mention was made of setup time, barrier to entry, or automated configuration. CITE MORE RELATED WORK
 
 \subsection{Objectives}
 
@@ -180,7 +180,7 @@ Other primary components include a collision checking module that detects the in
 
 Secondary components must also be integrated into a powerful motion planning framework. Depending on what configuration space a problem was solved in, a generated motion planning solution of position way points must be parameterized into a time-variant trajectory to be executed. A controller manager must decide the proper low level controllers for the necessary joints for each trajectory. Finally a perception interface must update the planning scene with recognized objects from a perception pipeline as well as optional raw sensor data.
 
-Higher level applications are then built on top of these motion planning components to coordinate more complex tasks, such as pick and place routines. Other optional components of a motion planning framework can include benchmarking tools, introspection and debug tools, as well as user-facing graphical user interfaces. 
+Higher level applications are then built on top of these motion planning components to coordinate more complex tasks, such as pick and place routines. Other optional components of a motion planning framework can include benchmarking tools, introspection and debug tools, as well as the user-facing GUI.
 
 There already exists a number of motion planning frameworks available today, both open and closed source. A quick survey of these software projects... TODO SURVEY
 
@@ -220,11 +220,11 @@ THINK OF MORE THINGS TO SAY
 
 In designing the configuration process required to allow MoveIt to work with many different types of robots using almost any combination of planning components, several contending design principles for lowering the barrier of entry emerged. These requirements were drawn partially from standard HCI principles, from work on previous robotic software, and from an iterative design process where feedback was solicited from the target users. We believe these \textit{entry barrier design principles} transcend motion planning and can be applied to most robotic software:
 
-{\bf Immediate}: The amount of time required to accomplish the most primitive task expected from the robotic software component should be minimized. This is similar to the time-honored ''Hello World'' demo frequently used by programming languages and typical Quick Start guides in documentation. Immediacy is essential for the \textif{paradox of the active user} as it provides cursory feedback to the user that the software works
+{\bf Immediate}: The amount of time required to accomplish the most primitive task expected from the robotic software component should be minimized. This is similar to the time-honored ''Hello World'' demo frequently used by programming languages and typical Quick Start guides in documentation. Immediacy is essential for the \textit{paradox of the active user} as it provides cursory feedback to the user that the software works
 
 {\bf Transparent}: The configuration steps being performed automatically for the user, and the underlying mechanisms utilized in the software components, should be as visible as possible. Transparency is important so that the user can later understand what is specific to their robot and know how to customize the aspects they desire. Hide too much of the setup process and the user will be hindered in the future.
 
-{\bf Intuitive}: The need to read accompanied documentation, and the amount of required documentation, should be minimized. A well designed user interface, be it graphical or command line, should be as intuitive as possible by following standard design patterns and providing interface context clues. An ideal graphical user interface for configuration would not require any documentation.
+{\bf Intuitive}: The need to read accompanied documentation, and the amount of required documentation, should be minimized. A well designed user interface, be it graphical or command line, should be as intuitive as possible by following standard design patterns and providing interface context clues. An ideal GUI for configuration would not require any documentation.
 
 {\bf Reconfigurable}: The automatically generated parameters and default values for the initial setup of a robot should be easy to modify at a later time by the user. Typically these parameters and values are chosen to work for the largest number of robots possible, but are not optimal for any particular robot. Providing easy methods to reconfigure the initial setup is very important. 
 
@@ -242,11 +242,13 @@ Many of these principles have opposing objectives that require a trade off or ba
 \section{Methods to Lower The Entry Barrier}
 \label{sec::lowering_barriers}
 
+One of the unique features of MoveIt is the ratio of its power and features to the required setup time. A beginner to motion planning can with very little effort use a model of a robot and execute motion plans in a virtual environment. With a few extra steps of setting up the correct hardware interfaces, one can then execute the motion plans on actual robotic hardware.
+
 The \textit{entry barrier design principles} discussed above were applied to the MoveIt motion planning framework to address the challenges faced for new users to this complex software framework. Developing these solutions required difficult software challenges be overcome as discussed in the following.
 
 \subsection{Basic Motion Planning Out of the Box}
 
-To address the entry barrier design principle of \textif{immediacy}, a streamlined ''Quick Start'' for MoveIt was created that consists of a series of fairly trivial steps relative to our target users. The most challenging of these steps - creating a \textif{robot model} - is not directly related to the configuration of MoveIt, but rather is a prerequisite of using the software framework. Nevertheless, we will discuss this important prerequisite before preceding to the more directly-related configuration steps. 
+To address the entry barrier design principle of \textit{immediacy}, a streamlined ''Quick Start'' for MoveIt was created that consists of a series of fairly trivial steps relative to our target users. The most challenging of these steps - creating a \textit{robot model} - is not directly related to the configuration of MoveIt, but rather is a prerequisite of using the software framework. Nevertheless, we will discuss this important prerequisite before preceding to the more directly-related configuration steps. 
 
 {\bf Robot Model Format}: The robot model is the data structures and accompanying file format used to describe the three dimensional geometric representation of the robot, its kinematics, as well as other properties relevant to robotics. These other properties can include the geometric visualization meshes, courser-grained collision geometry of the robot used in fast collision checking, joint limits, sensors, and dynamic properties such as mass, moments of inertia, and velocity limits. In our application, as well as most state of the art motion planning frameworks, we will restrict our definition of modeled robots to arbitrarily articulated rigid bodies.
 
@@ -254,9 +256,7 @@ Extensible robotics software requires using a standardized format that can expre
 
 To create the URDF or Collada model for a robot, computer aided design software is used to create the 3D geometries of the robot hardware. The generated individual geometric models, often referred to as \textit{links} in robotics, must then be combined into a connected model using \textit{joints}. Creating an accurate coherent model of a robot is one of the most difficult steps of using MoveIt and is an area in need of future improvement.
 
-{\bf MoveIt Setup Assistant}: One of the unique features of MoveIt is the ratio of its power and features to the required setup time. A beginner to motion planning can with very little effort take a kinematic model of an arbitrary articulated rigid body robot and execute motion plans in a virtual environment. With a few extra steps of setting up the correct hardware interfaces, one can then execute the motion plans on their actual robotic hardware.
-
-The main facility that provides out of the box support for beginners is the MoveIt Setup Assistant (SA). The SA is a graphical user interface that steps new users though the initial configuration requirements of using a custom robot with the motion planning framework (Figure 1). It accomplishes the task for the user of automatically generating many configuration files necessary for the initial operation of MoveIt. These configurations include a self-collision matrix, planning group definitions, robot poses, end effector semantics, virtual joints list, and passive joints list. A three dimensional model of the robot as its being configured is displayed on the right side of the SA graphical user interface (GUI) and various links on the robot are highlighted during configuration to visually confirm the actions of the user, as shown in Figure \ref{fig:setupassistant}.
+{\bf MoveIt Setup Assistant}: The main facility that provides out of the box support for beginners is the MoveIt Setup Assistant (SA). The SA is a GUI that steps new users though the initial configuration requirements of using a custom robot with the motion planning framework (Figure \ref{fig:setupassistant}). It accomplishes the task for the user of automatically generating all the many configuration files necessary for the initial operation of MoveIt. These configurations include a self-collision matrix, planning group definitions, robot poses, end effector semantics, virtual joints list, and passive joints list. To increase the immediacy of results and transparency of the configuration, a three dimensional model of the robot as its being configured is displayed on the right side of the Setup Assistant GUI and various links on the robot are highlighted during configuration to visually confirm the actions of the user, as shown in Figure \ref{fig:setupassistant}.
 
 \begin{figure}[!t]
 \centering
@@ -265,13 +265,11 @@ The main facility that provides out of the box support for beginners is the Move
 \label{fig:setupassistant}
 \end{figure}
 
-Using a properly formatted robot model file with the SA, MoveIt can automatically accomplish many of the required tasks in a motion planning framework including forward and inverse kinematics, collision checking, and joint limit enforcement.
+Using a properly formatted robot model file with the SA, MoveIt can automatically accomplish many of the required tasks in a motion planning framework including forward and inverse kinematics, collision checking, and joint limit enforcement. If one desired, the steps within the SA could almost entirely be automated themselves, but they have been kept manual so 1) increase transparency and 2) provide extensibility for edge cases and unusual customizations.
 
-If one truly desired, the steps within the SA could almost entirely be automated themselves, but they have been kept manual so as to allow edge cases and unusual customizations to be accomplished.
+{\bf MoveIt Rviz Motion Planning Plugin}: The details of the automated configuration is left for the next section, but after the steps in the SA are completed the output is a ROS package containing a collection of configuration files and launch scripts customized for the particular robot. The launch files include a demo script that will automatically startup a visualization tool (rviz) with the new robot loaded and ready to run state of the art motion planning algorithms in a non-physics based simulation. The typical demo task would be using the computer mouse to visually drag interactive arrows situated on the robot's end effector from a start position to a goal position around some virtual obstacle. The demo can then quickly plan the arm in a collision free path around the obstacle and visualize the results within rviz. 
 
-{\bf MoveIt Rviz Motion Planning Plugin}: The details of the automated configuration is left for the next section, but after the steps in the SA are completed the output is a ROS package containing a collection of configuration files and launch scripts. The launch files include a demo script that will startup a visualization tool (rviz) with the new robot loaded and ready to run state of the art motion planning algorithms in a non-physics based simulation. Using simple mouse-based interactive markers and the robot's various planning groups, the user can configure simple motion planning problems and quickly test the framework's capabilities.  
-
-An example demo task would be using the mouse to drag a robot end effector from a start position to a goal position around some virtual obstacle. Using another GUI - the MoveIt Rviz Motion Planning Plugin - the user can click the \textit{Plan} button and observe MoveIt quickly plan the arm in a collision free path around the obstacle \ref{fig:motionrvizplugin}.
+This user interaction is accomplished with the MoveIt Rviz Motion Planning Plugin (RMPP), an additional GUI that allows beginning users to learn and experiment with a large subset of the functionality provided by MoveIt (Figure \ref{fig:motionrvizplugin}). While the long term goals of robotics is to provide more autonomous solutions to motion planning and human-robot interactions \cite{rescueRobots}, the RMPP fulfills the immediate needs of direct operation for testing and debugging the framework's capabilities easily. This interface is a vital component of MoveIt's strategy to provide immediate results for motion planning with a robot that does not require any custom coding. Once the user is comfortable with the basic feature set and functionality of MoveIt, extensibility is provided via varying levels of code APIs for more direct, non-GUI, access to the robot's abilities.
 
 \begin{figure}[!t]
 \centering
@@ -280,9 +278,32 @@ An example demo task would be using the mouse to drag a robot end effector from 
 \label{fig:motionrvizplugin}
 \end{figure}
 
-It is important to emphasize the effect of a quick \textit{Getting Started} demo on a new user unaccustomed to MoveIt or motion planning in general. The reinforcement effect of initial success encourages the novice and enables them to start going deeper into the functionality and code base. If the entry barrier is too low, a new user will likely give up and turn to other frameworks or custom solutions rather than continue to blindly fix software that they have no experience in. TODO: move this paragraph?
+The RMPP provides a large number of features and visual tools for motion planning. Using Rviz and RMPP, visualizations are provided of:
+\begin{itemize}
+    \item Start and goal configurations of the robot for planning
+    \item Current robot hardware configuration
+    \item Animated planned path before executing
+    \item Detected collisions
+    \item Sensor data and recognized objects
+    \item Pick and place data such as grasp positions
+    \item Attached bodies such as manipulated objects
+    \item Planning Metrics
+\end{itemize}
 
-{\bf Hardware Configuration and Execution}: Once the user is comfortable with the basic tools and features provided by MoveIt, the next step is to configure their robot's actual hardware actuators and control interfaces to accept trajectory commands from MoveIt. This step requires some custom coding to account for the specifics of the robot hardware - the communication bus, real-time requirements, and control theory implementations. At the abstract level, all MoveIt requires is that the robot hardware accepts a standard ROS trajectory message containing a discretized set of time-variant waypoints including desired positions, velocities, and accelerations. 
+Additionally, the RMPP contains many other non-visualization tools such as:
+\begin{itemize}
+    \item Connecting to a database of planning scenes
+    \item Adjusting IK settings
+    \item Changing the utilized planning algorithm
+    \item Adjusting the workspace size
+    \item Adjusting goal tolerance and planning time
+    \item Tweaking manipulation plans
+    \item Loading and moving collision objects
+    \item Exporting/Importing scenes and states
+    \item Viewing the status of MoveIt
+\end{itemize}
+
+{\bf Hardware Configuration and Execution}: Once the user is comfortable with the basic tools and features provided by MoveIt, the next step is to configure their robot's actual hardware actuators and control interfaces to accept trajectory commands from MoveIt. This step is not as easy as it requires some custom coding to account for the specifics of the robot hardware - the communication bus, real-time requirements, and control theory implementations. At the abstract level, all MoveIt requires is that the robot hardware accepts a standard ROS trajectory message containing a discretized set of time-variant waypoints including desired positions, velocities, and accelerations. 
 
 \subsection{Automate configuration and optimization}
 
@@ -369,6 +390,10 @@ Setting up controllers is difficult
 Large code base is intimidating
 
 Built by one programmer so not the easiest layout
+
+Creating the SA or any GUI is a time consuming process that many robotics developers avoid in favor of manual or command-line based configuration. As discussed in the introduction, we believe that the trade off in the time invested was worthwhile for the higher adoption rates and
+
+It is important to emphasize the effect of a quick \textit{Getting Started} demo on a new user unaccustomed to MoveIt or motion planning in general. The reinforcement effect of initial success encourages the novice and enables them to start going deeper into the functionality and code base. If the entry barrier is too low, a new user will likely give up and turn to other frameworks or custom solutions rather than continue to blindly fix software that they have no experience in. TODO: move this paragraph?
 
 % ======================================================================================================
 % ======================================================================================================
