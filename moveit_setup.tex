@@ -125,9 +125,13 @@ Robotic Software Frameworks, Motion Planning, Barrier to Entry, Setup, Usability
 \maketitle
 
 
+% ======================================================================================================
+% ======================================================================================================
+% Section
+% ======================================================================================================
+% ======================================================================================================
 \section{Introduction}
-% The very first letter is a 2 line initial drop letter followed
-% by the rest of the first word in caps.
+% The very first letter is a 2 line initial drop letter followed by the rest of the first word in caps.
 \IEEEPARstart{M}{anaging} {the increasing complexity of modern robotic software is a difficult engineering challenge faced by roboticists today. The size of the code bases of common open source robotic software frameworks such as ROS \cite{quigley2009ros}, MoveIt \cite{MoveIt} and OROCOS \cite{bruyninckx2001open} are swelling \cite{makarenko2007benefits}, and the required breadth of knowledge for understanding the deep stack of software from control drivers to high level planners is become more formidable. As it is beyond the capabilities for any one researcher to have the necessary domain knowledge for every aspect of a robot's tool chain, it is necessary to assist users in the configuration, customization, and optimization of the various software components of a robotic framework. 
 
 \subsection{Barriers to Entry}
@@ -156,6 +160,11 @@ There has been much written and developed to addressed the software engineering 
 
 In this paper we will be using the new MoveIt Motion Planning Framework as our case study for barriers of entry to the usage of robotics software. In section \ref{sec::motion_planning} we will discuss the many software components that make motion planning frameworks a good example of the difficulties of complex robotics software. In section \ref{sec::moveit} we will introduce the MoveIt motion planning framework, in section \ref{sec::lowering_barriers} the methods under taken in MoveIt to reduce the entry barriers will be discussed, and in section \ref{sec::results} we will present the results of these methods on the size of the user base and ease of adoption of the software framework. Will conclude with our experiences in the development process.
 
+% ======================================================================================================
+% ======================================================================================================
+% Section
+% ======================================================================================================
+% ======================================================================================================
 \section{Motion Planning Frameworks}
 \label{sec::motion_planning}
 
@@ -185,6 +194,11 @@ There already exists a number of motion planning frameworks available today, bot
     \item Custom software
 \end{itemize}
 
+% ======================================================================================================
+% ======================================================================================================
+% Section
+% ======================================================================================================
+% ======================================================================================================
 \section{MoveIt Motion Planning Framework}
 \label{sec::moveit}
 
@@ -196,23 +210,49 @@ MoveIt is fast and can generate complete pick and place plans for a typical robo
 
 THINK OF MORE THINGS TO SAY
 
-\section{Configuration Design Principles}
+% ======================================================================================================
+% ======================================================================================================
+% Section
+% ======================================================================================================
+% ======================================================================================================
+\section{Entry Barrier Design Principles}
 \label{sec::requirements}
 
-In designing the configuration process required to allow MoveIt to work with many different types of robots using almost any combination of planning components, several contending design principles emerged. We believe these configuration design principles transcend motion planning and can be applied to most robotic software. 
+In designing the configuration process required to allow MoveIt to work with many different types of robots using almost any combination of planning components, several contending design principles for lowering the barrier of entry emerged. These requirements were drawn partially from standard HCI principles, from work on previous robotic software, and from an iterative design process where feedback was solicited from the target users. We believe these \textit{entry barrier design principles} transcend motion planning and can be applied to most robotic software:
 
-{\bf Quick Start}: The amount of time required to accomplish the most primitive task expected from the robotic software component should be minimized. This is similiar to the time-honored ''Hello World'' demo frequently used by programming languages. This is essential for the \textif{paradox of the active user} as it provides cursory feedback to the user that the software works
+{\bf Immediate}: The amount of time required to accomplish the most primitive task expected from the robotic software component should be minimized. This is similar to the time-honored ''Hello World'' demo frequently used by programming languages and typical Quick Start guides in documentation. Immediacy is essential for the \textif{paradox of the active user} as it provides cursory feedback to the user that the software works
 
+{\bf Transparent}: The configuration steps being performed automatically for the user, and the underlying mechanisms utilized in the software components, should be as visible as possible. Transparency is important so that the user can later understand what is specific to their robot and know how to customize the aspects they desire. Hide too much of the setup process and the user will be hindered in the future.
 
+{\bf Intuitive}: The need to read accompanied documentation, and the amount of required documentation, should be minimized. A well designed user interface, be it graphical or command line, should be as intuitive as possible by following standard design patterns and providing interface context clues. An ideal graphical user interface for configuration would not require any documentation.
+
+{\bf Reconfigurable}: The automatically generated parameters and default values for the initial setup of a robot should be easy to modify at a later time by the user. Typically these parameters and values are chosen to work for the largest number of robots possible, but are not optimal for any particular robot. Providing easy methods to reconfigure the initial setup is very important. 
+
+{\bf Extensible}: The ability of the user to customize as many components and behaviors as possible within the reasonable scope of the software. Providing the means to extend the software with custom solutions for a particular application will make the software far more powerful and re-usable. A typical solution for this is providing a plugin interface.
+
+{\bf Documented}: The written text explaining how to use the software should be maximized for as many aspects and user levels as possible. Even the most intuitive software requires documentation for various aspects of the operation or modification of the software itself. Different types of documentation are needed for different users - for example developers and end users - though in robotics this is frequently the same. Documentation is arguably the most important factor in reducing the barrier to entry of new software.
+
+Many of these principles have opposing objectives that require a trade off or balance be found between them. For example, the desire for transparency in the underlying mechanisms often leads to slower setup times (immediacy) and more complicated configuration steps (unintuitive). The need for extensibility of various components in the software often results in far more complicated software design as more abstraction is required, resulting in a less intuitive code base and difficult documentation. Nevertheless, compromises can be made between these principles that result in a superior user experience as will be demonstrated in the next section.
+
+% ======================================================================================================
+% ======================================================================================================
+% Section
+% ======================================================================================================
+% ======================================================================================================
 \section{Methods to Lower The Entry Barrier}
 \label{sec::lowering_barriers}
 
-There are many challenges faced in created motion planning software that 
-
-
-The following features have been implemented in MoveIt with the motivation to lower the barrier of entry for as many users as possible.
+The \textit{entry barrier design principles} discussed above were applied to the MoveIt motion planning framework to address the challenges faced for new users to this complex software framework. Developing these solutions required difficult software challenges be overcome as discussed in the following.
 
 \subsection{Basic Motion Planning Out of the Box}
+
+To address the entry barrier design principle of \textif{immediacy}, a streamlined ''Quick Start'' for MoveIt was created that consists of a series of fairly trivial steps relative to our target users. The most challenging of these steps - creating a \textif{robot model} - is not directly related to the configuration of MoveIt, but rather is a prerequisite of using the software framework. Nevertheless, we will discuss this important prerequisite before preceding to the more directly-related configuration steps. 
+
+{\bf Robot Model Format}: The robot model is the data structures and accompanying file format used to describe the three dimensional geometric representation of the robot, its kinematics, as well as other properties relevant to robotics. These other properties can include the geometric visualization meshes, courser-grained collision geometry of the robot used in fast collision checking, joint limits, sensors, and dynamic properties such as mass, moments of inertia, and velocity limits. In our application, as well as most state of the art motion planning frameworks, we will restrict our definition of modeled robots to arbitrarily articulated rigid bodies.
+
+Extensible robotics software requires using a standardized format that can express the intricacies of varying hardware configurations. An additional design requirement for this standardized format is that it is \textit{intuitive} for users to setup. This was accomplished for MoveIt by utilizing the human-readable XML schema provided by ROS for robot models - the Universal Robotic Description Format (URDF) \cite{urdf}. This data structure format can accept URDF-formatted files, as well as the industry standard Collada \cite{collada} format.
+
+To create the URDF or Collada model for a robot, computer aided design software is used to create the 3D geometries of the robot hardware. The generated individual geometric models, often referred to as \textit{links} in robotics, must then be combined into a connected model using \textit{joints}. Creating an accurate coherent model of a robot is one of the most difficult steps of using MoveIt and is an area in need of future improvement.
 
 {\bf MoveIt Setup Assistant}: One of the unique features of MoveIt is the ratio of its power and features to the required setup time. A beginner to motion planning can with very little effort take a kinematic model of an arbitrary articulated rigid body robot and execute motion plans in a virtual environment. With a few extra steps of setting up the correct hardware interfaces, one can then execute the motion plans on their actual robotic hardware.
 
@@ -225,7 +265,7 @@ The main facility that provides out of the box support for beginners is the Move
 \label{fig:setupassistant}
 \end{figure}
 
-The required input for the SA is a robot model file, which currently accepts the Universal Robotic Description Format (URDF) \cite{garage2012xml} or Collada \cite{collada} file formats. These XML schemas describe the physical layout of a robot's link, joints, and other necessary modeling components. They can also combine appropriate 3D CAD meshes, collision models, dynamics, joint limits, sensors and other components. Using a properly formatted robot model file with the SA, MoveIt can automatically accomplish many of the required tasks in a motion planning framework including forward and inverse kinematics, collision checking, and joint limit enforcement.
+Using a properly formatted robot model file with the SA, MoveIt can automatically accomplish many of the required tasks in a motion planning framework including forward and inverse kinematics, collision checking, and joint limit enforcement.
 
 If one truly desired, the steps within the SA could almost entirely be automated themselves, but they have been kept manual so as to allow edge cases and unusual customizations to be accomplished.
 
@@ -284,6 +324,11 @@ MoveIt again provides a low barrier to entry for benchmarking with easy to creat
 
 TODO: expand this section. Cite Ben Cohen's paper on it
 
+% ======================================================================================================
+% ======================================================================================================
+% Section
+% ======================================================================================================
+% ======================================================================================================
 \section{Results}
 \label{sec::results}
 
@@ -305,7 +350,12 @@ Show plots from https://www.ohloh.net/p/moveit
 
 Survey on students and research's experience with MoveIt
 
-\section{Remaining Issues}
+% ======================================================================================================
+% ======================================================================================================
+% Section
+% ======================================================================================================
+% ======================================================================================================
+\section{Discussion}
 \label{sec::issues}
 
 TODO 
@@ -320,10 +370,20 @@ Large code base is intimidating
 
 Built by one programmer so not the easiest layout
 
+% ======================================================================================================
+% ======================================================================================================
+% Section
+% ======================================================================================================
+% ======================================================================================================
 \section{Conclusion}
 
 Beyond the usual considerations in building successful robotics software, an open source project that desires to maintain an active user base needs to take into account the barrier of entry to new users. As the algorithms become more complicated and the number of components and code base increases, configuring an arbitrary robot to utilize robotic software becomes a daunting task requiring domain-specific expertise in a very large breadth of theory and implementation. To account for this, quick and easy initial configuration, with partially automated optimization, and easily extensible components for future customization are becoming a greater necessity in motion planning and robotic software engineering in general. 
 
+% ======================================================================================================
+% ======================================================================================================
+% Section
+% ======================================================================================================
+% ======================================================================================================
 \section*{Acknowledgments}
 The authors would like to thank...
 
