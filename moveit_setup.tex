@@ -161,7 +161,7 @@ There has been much written and developed to addressed the software engineering 
 % ======================================================================================================
 \subsection{Objectives}
 
-In this paper we will be using the new MoveIt Motion Planning Framework as our case study for barriers of entry to the usage of robotics software. In section \ref{sec::motion_planning} we will discuss the many software components that make motion planning frameworks a good example of the difficulties of complex robotics software. In section \ref{sec::moveit} we will introduce the MoveIt motion planning framework, in section \ref{sec::lowering_barriers} the methods under taken in MoveIt to reduce the entry barriers will be discussed, and in section \ref{sec::results} we will present the results of these methods on the size of the user base and ease of adoption of the software framework. Will conclude with our experiences in the development process.
+In this paper we will be using the new MoveIt Motion Planning Framework as our case study for barriers of entry to the usage of robotics software. In section \ref{sec::motion_planning} we will discuss the many software components that make motion planning frameworks a good example of the difficulties of complex robotics software. In section \ref{sec::moveit} we will introduce the MoveIt motion planning framework, in section \ref{sec::lowering_barriers} the methods under taken in MoveIt to reduce the entry barriers will be discussed, and in section \ref{sec::results} we will present the results of these methods on the size of the user base and ease of adoption of the software framework. Will conclude with our experiences in the development process in section \ref{sec::discussion}.
 
 % ======================================================================================================
 % ======================================================================================================
@@ -444,21 +444,29 @@ plot
 % ======================================================================================================
 % ======================================================================================================
 \section{Discussion}
-\label{sec::issues}
+\label{sec::discussion}
 
-''Will conclude with our experiences in the development process.''
+\subsection{MoveIt Setup}
+\label{sec::moveit_discussion}
 
-There are still barriers to entry
+We believe the setup process for MoveIt is easier than most open source robotics software available today, and as a result it has in a short amount of time become popular in the robotics community as a powerful motion planning framework that is extensible to most user's needs. The adoption rate of MoveIt since its official release less than half a year ago has been very positive and the number of contributors has been better than expected. Ohloh's ranking of MoveIt as one of the largest open source teams in the world confirms our belief that by making complex software more accessible, more developers will be able to report and fix issues. 
 
-Setting up controllers is difficult
+It is important to emphasize the effect of a quick \textit{Getting Started} demo on a new user unaccustomed to MoveIt or motion planning in general. The positive reinforcement of a quick initial success encourages the novice to continue to use the software and enables them to begin going deeper into the functionality and code base. If the entry barrier is too high, that is to say if it is too complex and error-prone, a new user will likely give up and turn to other frameworks or custom solutions. Attempting to blindly fix software that a new user has not had any success with is a very difficult task.
 
-Large code base is intimidating
+Still, the setup and configuration process has room for improvement as indicated by the survey's TODO. Creating the robot model itself is a difficult task that typically requires a lot of trial and error in configuring the links and joints properly. This process could be improved by a better GUI for making arbitrary robot models. 
 
-Built by one programmer so not the easiest layout
+Setting up the hardware controllers can also be a difficult task for non-experts and the MoveIt setup process does not document and provide example code as well as it could. It is likely this step will continue to require some custom coding to account for arbitrary hardware interfaces and communication methods, but based on the feedback we have received from actual users, this is certainly an area of improvement. 
 
-Creating the SA or any GUI is a time consuming process that many robotics developers avoid in favor of manual or command-line based configuration. As discussed in the introduction, we believe that the trade off in the time invested was worthwhile for the higher adoption rates and
+Finally, although MoveIt is very extensible with its plugin-based architecture, modifying the actual code base of MoveIt can be intimidating due to its large size. Currently, MoveIt contains 173,376	lines of code across all its various packages. Additionally, due to the need for computational speed and power, in the opinion of this author the layout of the code is sometimes complicated. Over half of the code base has been created by a single developer, so readability has not been the highest objective. 
 
-It is important to emphasize the effect of a quick \textit{Getting Started} demo on a new user unaccustomed to MoveIt or motion planning in general. The reinforcement effect of initial success encourages the novice and enables them to start going deeper into the functionality and code base. If the entry barrier is too low, a new user will likely give up and turn to other frameworks or custom solutions rather than continue to blindly fix software that they have no experience in. TODO: move this paragraph?
+\subsection{Robotic Software}
+\label{sec::robotic_discussion}
+
+The techniques utilized in the development of MoveIt can easily be applied to robotics software in general. Almost all robotics software requires customizations specific to a particular hardware and kinematic configuration. Reducing the difficulty of performing these customizations should be the goal of robotic software engineers who desire to create useful tools for a large audience. 
+
+For example, in perception applications such as visual servoing, frame transforms must be specified of the location of the camera to the rest of the robot's geometry. This is often a difficult and tedious task CITE. Automating the calibration of these transforms lowers the barrier of entry to new users to robotic vision software and makes the vision software useful to more users.
+
+Creating a GUI such as the Setup Assistant is a time consuming process that many robotics developers avoid in favor of manual or command-line based configuration. As discussed in the introduction, we believe that the trade off in the time invested is worthwhile for the higher adoption rates and creation of a larger community willing to contribute to the software's development. It is understandable that when robotics research is the priority, spending time on tangential aspects of the project such as GUIs and configuration tools can be less important to the researcher. Still, we would like to encourage researchers and developers alike to when possible spend the extra time making their work reusable by taking into consideration the barriers to entry that other users might encounter. Too often, software is touted as ''open source'' when its usefulness is in actuality severely limited by the difficulties encountered in applying it to other projects by other users. By sharing accessible open source robotics software, the progress of robotic technology is accelerated and the robotics community on the whole benefits.
 
 % ======================================================================================================
 % ======================================================================================================
