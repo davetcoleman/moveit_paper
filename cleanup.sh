@@ -5,3 +5,6 @@ rm moveit_setup.brf
 rm moveit_setup.log
 rm moveit_setup.out
 rm moveit_setup.tex~
+rm moveit_setup.tex.backup
+rm moveit_setup_bibliography.bib~
+rm moveit_setup_bibliography.bib.backup
