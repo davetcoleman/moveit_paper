@@ -129,11 +129,10 @@ Robotic Software Frameworks, Motion Planning, Barrier to Entry, Setup, Usability
 % ====================================================================
 \section{Introduction}
 % The very first letter is a 2 line initial drop letter followed by the rest of the first word in caps.
-\IEEEPARstart{M}{anaging} {the increasing complexity of modern robotic software is a difficult engineering challenge faced by roboticists today. The size of the code bases of common open source robotic software frameworks such as ROS \cite{quigley2009ros}, MoveIt \cite{moveit} and OROCOS \cite{bruyninckx2001open} continues to increase \cite{makarenko2007benefits}, and the required breadth of knowledge for understanding the deep stack of software from control drivers to high level planners is becoming more daunting. As it is beyond the capabilities for any one researcher to have the necessary domain knowledge for every aspect of a robot's tool chain, it is becoming increasingly necessary to assist users in the configuration, customization, and optimization of the various software components of a robotic framework. 
+\IEEEPARstart{M}{anaging} {the increasing complexity of modern robotic software is a difficult engineering challenge faced by roboticists today. The size of the code bases of common open source robotic software frameworks such as ROS \cite{quigley2009ros}, MoveIt \cite{moveit} and OROCOS \cite{bruyninckx2001open} continues to increase \cite{makarenko2007benefits}, and the required breadth of knowledge for understanding the deep stack of software from control drivers to high level planners is becoming more daunting. As it is beyond the capabilities for any one researcher to have the necessary domain knowledge for every aspect of a robot's tool chain, it is becoming increasingly necessary to assist users in the configuration, customization, and optimization of the various software components of a reusable robotic framework. 
 
 The user interface design principles required in the emerging field of robotics software is similar to other more mature software engineering fields and much can be learned from them. There have been many examples of software, such as computer operating systems, that have historically required many installation and configuration steps. As those software fields matured, the entry to barriers have decreased and become easier for users to accomplish. Still, robotics software in general is unique in 1) the degree to which software interacts with hardware and real world environments, 2) the lack of maturity in the field results in many varying approaches for solving a problem, and 3) the long term desire to increase the autonomy of robotics systems. 
 
-TODO emphasize term "reuse"
 % ====================================================================
 \subsection{Barriers to Entry}
 
@@ -160,7 +159,7 @@ The target \textit{users} as used in this paper are engineers, scientists, stude
 % ====================================================================
 \subsection{Difficulty of Robot Agnostic Software}
 
-The software engineering challenges faced in making robot-agnostic code are hard - many shortcuts typical for single-robot software must be avoided, such as hard coding in domain-specific values and using heuristics applicable to only one hardware configuration. Accounting for all the edge cases of a robot's design requires many extra levels of abstraction. On top of these challenges, packaging up this powerful software into an easy to use experience for end users requires creating many tools that automate the configuration of the software.
+The software engineering challenges faced in making robot-agnostic code are hard - many shortcuts typical for single-robot software must be avoided, such as hard coding in domain-specific values and using heuristics applicable to only one hardware configuration. Accounting for all the edge cases of a robot's design requires many extra levels of abstraction. On top of these challenges, packaging up this reusable software into an easy to setup experience for end users requires creating many tools that automate the configuration of the software.
 
 % ====================================================================
 \subsection{Related Work}
@@ -231,9 +230,9 @@ MoveIt is the primary motion planning framework in ROS and has been successfully
 
 By default MoveIt is built on ROS and integrates the Open Motion Planning Library (OMPL) \cite{sucan2012the-open-motion-planning-library} for planning, the Fast Collision Library (FCL) \cite{fcl} for collision checking, and the OROCOS Kinematics and Dynamics Library (KDL) \cite{kdl} for forward and inverse kinematics. The ability to change these default planning components in discussed in section \ref{subsec:extensiblity}.
 
-TODO: Describe the context for which results can be applied 
+MoveIt's target application is for the control of a single rigid body robot in a wide range of environments. Although it has primarily been developed for single and dual arm manipulation, it can also be applied to non-holonomic vehicles, rotocraft and other configuration spaces. It is intended to be used in industrial, consumer, and research settings. 
 
-MoveIt is fast and can generate complete pick and place plans for a typical robotic arm in TODO: BENCHMARK TIME in preliminary experiments on an 64 bit Ubuntu 12.04 PC with a 3.6Ghz Intal Core i7 processor and 16 GB ram.
+MoveIt is fast and can generate complete pick and place plans for a typical robotic arm in TODO: BENCHMARK TIME in preliminary experiments on an 64 bit Ubuntu 12.04 PC with a 3.6Ghz Intal Core i7 processor and 16 GB ram. TODO: keep this?
 
 % ====================================================================
 % ====================================================================
@@ -255,7 +254,7 @@ In designing the configuration process required to enable MoveIt to work with ma
 
 {\bf Extensible}: The ability of the user to customize as many components and behaviors as possible within the reasonable scope of the software. Providing the means to extend the software with custom solutions for a particular application will make the software far more powerful and re-usable for varying use-cases. A typical solution for this is providing a plugin interface.
 
-{\bf Documented}: The amount of reference material explaining how to use the software should be maximized for as many aspects and user levels as possible. Even the most intuitive software requires documentation for various aspects of the operation or modification of the software itself. Different types of documentation are needed for different users - for example developers and end users - though in robotics this is frequently the same. Documentation is arguably the most important factor in reducing the barrier to entry of new software. TODO cite documentation importance
+{\bf Documented}: The amount of reference material explaining how to use the software should be maximized for as many aspects and user levels as possible. Even the most intuitive software requires documentation for various aspects of the operation or modification of the software itself. Different types of documentation are needed for different users - for example developers and end users - though in robotics this is frequently the same. Documentation is arguably the most important factor in reducing the barrier to entry of new software \cite{forward2002relevance}.
 
 Many of these principles have opposing objectives that require a trade off or balance be found between them. For example, the desire for transparency in the underlying mechanisms often leads to slower setup times (immediacy) and more complicated configuration steps (unintuitive). The need for extensibility of various components in the software often results in far more complicated software design as more abstraction is required, resulting in a less intuitive code base and difficult documentation. Nevertheless, compromises can be made between these principles that result in a superior user experience as will be demonstrated in the next section.
 
@@ -403,7 +402,7 @@ The success of MoveIt's efforts to lower its barrier of entry to new users throu
 \subsection{Statistics}
 \label{sec::statistics}
 
-MoveIt was officially alpha released on May 6th, 2013. As of this writing, 170 days since its release, there have been TODO XX debian downloads from its supported Ubuntu operating system.
+MoveIt was officially alpha released on May 6th, 2013. As of this writing, 170 days since its release, there have been TODO Tully XX debian downloads from its supported Ubuntu operating system.
 
 There are 165 users on the MoveIt mailing list as shown over time in Figure \ref{fig:membership_plot}. The posting activity of the mailing list over time in shown in Figure \ref{fig:mailing_list}.
 
