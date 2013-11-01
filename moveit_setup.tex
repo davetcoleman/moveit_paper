@@ -280,16 +280,23 @@ Extensible robotics software requires using a standardized format that can expre
 
 To create the URDF or Collada model for a robot, computer aided design (CAD) software is used to create the 3D geometries of the robot hardware. The generated individual geometric models, often referred to as \textit{links} in robotics, must then be combined into a connected model using \textit{joints}. If the SolidWorks CAD software is used, a converter has been created that can automatically convert it to the URDF format. Otherwise, the URDF model can be made by hand.
 
-{\bf MoveIt Setup Assistant}: The main facility that provides out of the box support for beginners is the MoveIt Setup Assistant (SA). The SA is a GUI that steps new users though the initial configuration requirements of using a custom robot with the motion planning framework (Figure \ref{fig:setupassistant}). It accomplishes the task for the user of automatically generating all the many configuration files necessary for the initial operation of MoveIt. These configurations include a self-collision matrix, planning group definitions, robot poses, end effector semantics, virtual joints list, and passive joints list. To increase the immediacy of results and transparency of the configuration, a three dimensional model of the robot as it is being configured is displayed on the right side of the Setup Assistant GUI and various links on the robot are highlighted during configuration to visually confirm the actions of the user, as shown in Figure \ref{fig:setupassistant}.
+{\bf MoveIt Setup Assistant}: The main facility that provides out of the box support for beginners is the MoveIt Setup Assistant (SA). The SA is a GUI that steps new users though the initial configuration requirements of using a custom robot with the motion planning framework (Figure \ref{fig:setupassistant}). It accomplishes the task for the user of automatically generating all the many configuration files necessary for the initial operation of MoveIt. These configurations include a self-collision matrix, planning group definitions, robot poses, end effector semantics, virtual joints list, and passive joints list. 
 
 \begin{figure}[!t]
 \centering
 \includegraphics[width=3.4in]{images/setup_assistant}
-\caption{Screenshot of MoveIt Setup Assistant with the NASA Robonaut loaded}
+\caption{MoveIt Setup Assistant GUI with the NASA Robonaut loaded in the self-collision matrix screen.}
 \label{fig:setupassistant}
 \end{figure}
 
-The GUI consists of 1) large navigation pane on the left that allows the user to move non-linearly through the setup process as needed, 2) the middle settings window that changes based on the current setup step being performed by the user, and 3) a right side visualization of the robot as it is being configured. 
+The GUI consists of 1) large navigation pane on the left that allows the user to move non-linearly through the setup process as needed, 2) the middle settings window that changes based on the current setup step being performed by the user, and 3) a right side visualization of the three dimensional model of the robot as it is being configured. The right side visualization increases the immediacy of results and transparency of the configuration by highlighting various links of the robot during configuration to visually confirm the actions of the user, as shown in Figure \ref{fig:setupassistant3}.
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=3.4in]{images/setup_assistant3}
+\caption{MoveIt Setup Assistant GUI with the Atlas robot's left arm highlighted for user feedback on the planning groups screen.}
+\label{fig:setupassistant3}	
+\end{figure}
 
 Using a properly formatted robot model file with the SA, MoveIt can automatically accomplish many of the required tasks in a MPF. If one desired, the steps within the SA could almost entirely be automated themselves, but they have been kept manual so 1) increase transparency and 2) provide extensibility for edge cases and unusual customizations.
 
@@ -299,14 +306,20 @@ This user interaction is accomplished with the MoveIt Rviz Motion Planning Plugi
 
 \begin{figure}[!t]
 \centering
-\includegraphics[width=3.4in]{images/rviz_plugin}
-\caption{Screenshot of MoveIt Rviz Motion Planning Plugin with the Robonaut planning between two configurations TODO: better picture}
+\includegraphics[width=3.4in]{images/rviz_motion_planning}
+\caption{MoveIt Motion Planning Visualization GUI with the PR2 planning with both arms to goal positions with interactive mouse-based tools}
 \label{fig:motionrvizplugin}
 \end{figure}
 
-TODO: picture that shows a motion plan in rviz.
+\begin{figure}[!t]
+\centering
+\includegraphics[width=3.4in]{images/motion_plan}
+\caption{MoveIt Motion Planning Visualization GUI with the Baxter robot visualizing steps of a motion plan}
+\label{fig:motion_plan}	
+\end{figure}
 
-The RMPP provides a large number of features and visual tools for motion planning. Using Rviz and RMPP, visualizations are provided of:
+The RMPP provides a large number of features and visual tools for motion planning. Using Rviz and RMPP, visualizations such as seen in Figure \ref{fig:motion_plan} are provided of:
+
 \begin{itemize}
     \item Start and goal configurations of the robot for planning
     \item Current robot hardware configuration
@@ -350,7 +363,7 @@ This self-collision matrix is generated by running the robot through tens of tho
 
 {\bf Configuration Files}: The other six steps of the SA all provide graphical front ends for the data required to populate the Semantic Robotic Description Format (SRDF) and other configuration files used by MoveIt. The SRDF provides semantic meta data of the robot model useful to motion planning but not relevant to the URDF because it does not describe physical properties of the robot. The SRDF information includes which set of joints constitutes an arm and which set of links is considered part of the end effector. It is one of the main components that allows MoveIt to be robot agnostic and to avoid dependencies on specific robots \cite{moveit}. Requiring the user to configure all the semantic information by hand in a text editor would be tedious and more difficult than using a GUI. The GUI populates the available options for each input field in list boxes and guides the user through filling in the necessary fields with buttons and graphical feedback.
 
-The last step of the SA is to generate all launch scripts \textbf{i think a note on what launch files are is in order; maybe just say launch scripts everywhere instead of launch files?} and configuration files. This step outputs to file the information collected from the user during the step-by-step user interface, as well as generates a series of default configuration and launch scripts that are automatically customized for the particular robot using the URDF and SRDF information. These defaults include velocity and acceleration limits for each joint, kinematic solvers for each planning group, available planning algorithms, and projection evaluators for planning. Default planning adapters are setup for pre- and post-processing of motion plans. Default benchmarking setups, controller and sensor manager scripts, and empty object databases are all generated using launch scripts, which essentially allow one to start different sets of MoveIt functionality that are already put together. These defaults can later 
+The last step of the SA is to generate all launch scripts and configuration files. This step outputs to file the information collected from the user during the step-by-step user interface, as well as generates a series of default configuration and launch scripts that are automatically customized for the particular robot using the URDF and SRDF information. These defaults include velocity and acceleration limits for each joint, kinematic solvers for each planning group, available planning algorithms, and projection evaluators for planning. Default planning adapters are setup for pre- and post-processing of motion plans. Default benchmarking setups, controller and sensor manager scripts, and empty object databases are all generated using launch scripts, which essentially allow one to start different sets of MoveIt functionality that are already put together. These defaults can later 
 easily be modified by simply editing the text-based configuration files.
 
 {\bf Automatic Runtime Tuning}: MoveIt is designed to simplify solving planning problems by reducing the number of hard-coded parameters and so called ''magic numbers''. During runtime, MoveIt is able to automatically choose good values for certain parameters to reduce the amount of expert domain knowledge required and make MoveIt extensible to a larger set of problems. 
@@ -425,7 +438,7 @@ There have been a total of 48 contributors to the code base since its initial de
 \begin{figure}[!t]
 \centering
 \includegraphics[width=3.4in]{images/contributors}
-\caption{Total code contributors to MoveIt across all repositories. TODO cleanup diagram, add titles and axis labels}
+\caption{Total code contributors to MoveIt across all repositories. TODO cleanup diagram, add titles and axis labels, replace with total code amount}
 \label{fig:contributors}
 \end{figure}
 
