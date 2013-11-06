@@ -71,11 +71,11 @@
 \title{Reducing the Barrier to Entry of \\\vskip 0.3\baselineskip Complex Robotic Software}
 
 \author{
-David COLEMAN$^{1,2}$
+David COLEMAN$^{1}$
 \qquad
 Ioan SUCAN$^{2}$
 \qquad
-Sachin CHITTA$^{3,2}$
+Sachin CHITTA$^{3}$
 \qquad
 Nikolaus CORRELL$^{1}$
 
@@ -87,7 +87,7 @@ revised July 11, 2009.}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\IEEEcompsocitemizethanks{\IEEEcompsocthanksitem This work was supported by the now defunct Willow Garage, Inc. through employment and internships by its authors.
+\IEEEcompsocitemizethanks{\IEEEcompsocthanksitem This work was mostly performed while Coleman, Sucan, and Chitta were at Willow Garage, Inc.
 .\protect\\
 
 \IEEEcompsocthanksitem Authors retain copyright to their papers
@@ -190,7 +190,7 @@ Robotic motion planning is a maturing and central field in robotics \cite{moll20
 
 The software development of a motion planning framework (MPF) is challenging and involves combining many disparate fields of robotics and software engineering \cite{perez2010roadmap}. We refer to the software as a \textit{framework} in this context because it abstracts the various components of motion planning into generic interfaces as discussed later.
 
-One of the most important features of a framework for motion planning is providing the structures and classes to share common data between the different components. These basic data structures include a model of the robot, a method for maintaining a representation of the state of the robot during planning and execution, and a method for maintaining the environment as perceived by the robot's sensors (the ''planning scene'').
+One of the most important features of a framework for motion planning is providing the structures and classes to share common data between the different components. These basic data structures include a model of the robot, a method for maintaining a representation of the state of the robot during planning and execution, and a method for maintaining the environment as perceived by the robot's sensors (the ``planning scene'').
 
 In addition to the common data structures, a MPF requires many different interacting software components, henceforth referred to as the \textit{planning components}. A high level diagram of the various planning components is shown in Figure \ref{fig:motionplanning_highlevel}. The planning component that actually performs motion planning includes one or more algorithms suited for solving the expected problems a robot will encounter. The field of motion planning is large and no one-size fits all solution exists yet, so a framework that is robot agnostic should likely include an assortment of algorithms and algorithm variants.
 
@@ -243,7 +243,7 @@ MoveIt!'s target application is for the control of an articulated rigid body rob
 
 In designing the configuration process required to enable MoveIt! to work with many different types of robots, with almost any combination of planning components, several contending design principles for lowering the barrier of entry emerged. These requirements were drawn partially from standard HCI principles \cite{galitz2007essential}, from work on MoveIt!'s predecessor - the \textit{arm\_navigation} project, and from an iterative design process where feedback was gained from internal users at Willow Garage during development. We believe these \textit{entry barrier design principles} transcend motion planning and can be applied to most robotic software:
 
-{\bf Immediate}: The amount of time required to accomplish the most primitive task expected from the robotic software component should be minimized. This is similar to the time-honored ''Hello World'' demo frequently used by programming languages and typical Quick Start guides in documentation. Immediacy is essential for the \textit{paradox of the active user} as it provides cursory feedback to the user that the software works and is worth investing further time.
+{\bf Immediate}: The amount of time required to accomplish the most primitive task expected from the robotic software component should be minimized. This is similar to the time-honored ``Hello World'' demo frequently used by programming languages and typical Quick Start guides in documentation. Immediacy is essential for the \textit{paradox of the active user} as it provides cursory feedback to the user that the software works and is worth investing further time.
 
 {\bf Transparent}: The configuration steps being performed automatically for the user, and the underlying mechanisms utilized in the software components, should be as visible as possible. Transparency is important so that the user can later understand what parameters are specific to their robot and know how to customize the aspects they desire. Hiding too much of the setup process can lead the user user to being hindered in the future.
 
@@ -272,7 +272,7 @@ The \textit{entry barrier design principles} discussed above were applied to Mov
 % ====================================================================
 \subsection{Basic Motion Planning Out of the Box}
 
-To address the entry barrier design principle of \textit{immediacy}, a streamlined ''Quick Start'' for MoveIt! was created that consists of a series of fairly trivial steps, relative to our target users. The most challenging of these steps - creating a \textit{robot model} - is not directly related to the configuration of MoveIt!, but rather is a prerequisite of using the software framework. Nevertheless, we will discuss this important prerequisite before preceding to the more directly-related configuration steps. 
+To address the entry barrier design principle of \textit{immediacy}, a streamlined ``Quick Start'' for MoveIt! was created that consists of a series of fairly trivial steps, relative to our target users. The most challenging of these steps - creating a \textit{robot model} - is not directly related to the configuration of MoveIt!, but rather is a prerequisite of using the software framework. Nevertheless, we will discuss this important prerequisite before preceding to the more directly-related configuration steps. 
 
 {\bf Robot Model Format}: The robot model is the data structures and accompanying file format used to describe the three-dimensional geometric representation of the robot, its kinematics, as well as other properties relevant to robotics. These other properties can include the geometric visualization meshes, courser-grained collision geometry of the robot used for fast collision checking, joint limits, sensors, and dynamic properties such as mass, moments of inertia, and velocity limits. Often the robot's joints and links relationships are represented by a kinematic tree, though this approach is problematic when a robot has a closed chain. In our application, as well as most state of the art MPFs, we will restrict our definition of modeled robots to arbitrarily articulated rigid bodies. 
 
@@ -366,7 +366,7 @@ This self-collision matrix is generated by running the robot through tens of tho
 The last step of the SA is to generate all launch scripts and configuration files. This step outputs to file the information collected from the user during the step-by-step user interface, as well as generates a series of default configuration and launch scripts that are automatically customized for the particular robot using the URDF and SRDF information. These defaults include velocity and acceleration limits for each joint, kinematic solvers for each planning group, available planning algorithms, and projection evaluators for planning. Default planning adapters are setup for pre- and post-processing of motion plans. Default benchmarking setups, controller and sensor manager scripts, and empty object databases are all generated using launch scripts, which essentially allow one to start different sets of MoveIt! functionality that are already put together. These defaults can later 
 easily be modified by simply editing the text-based configuration files.
 
-{\bf Automatic Runtime Tuning}: MoveIt! is designed to simplify solving planning problems by reducing the number of hard-coded parameters and so called ''magic numbers''. During runtime, MoveIt! is able to automatically choose good values for certain parameters to reduce the amount of expert domain knowledge required and make MoveIt! extensible to a larger set of problems. 
+{\bf Automatic Runtime Tuning}: MoveIt! is designed to simplify solving planning problems by reducing the number of hard-coded parameters and so called ``magic numbers''. During runtime, MoveIt! is able to automatically choose good values for certain parameters to reduce the amount of expert domain knowledge required and make MoveIt! extensible to a larger set of problems. 
 
 An example of automatic runtime tuning is the resolution in which collision checking is performed - it is defined as a fraction of the space extent. The space extent depends on the joint limits, the types of joints, and the planning groups being used. Another example is using projections to Euclidean spaces to estimate coverage during planning. By default in MoveIt!, the projects are computed randomly and their bounds are found by sampling. TODO: more details on this paragraph
 
@@ -400,7 +400,7 @@ Essentially, MoveIt! provides a set of data sharing and synchronization tools, s
 % ====================================================================
 \subsection{Documentation and Community}
 
-Though extremely common place in open source software projects \cite{bruyninckx2001open}, it should be mentioned for completeness that MoveIt! addressed the \textit{entry barrier design principle} of \textit{documentation} by providing extensive wiki pages, a mailing list for questions, and a issue tracker for bug reports and feature requests.
+Though common place in open source software projects \cite{bruyninckx2001open}, it should be mentioned for completeness that MoveIt! addressed the \textit{entry barrier design principle} of \textit{documentation} by providing extensive wiki pages, a mailing list for questions, and a issue tracker for bug reports and feature requests.
 
 % ====================================================================
 % ====================================================================
@@ -415,24 +415,24 @@ The success of MoveIt!'s efforts to lower its barrier of entry to new users thro
 \subsection{Statistics}
 \label{sec::statistics}
 
-MoveIt! was officially alpha released on May 6th, 2013. As of this writing, 170 days since its release, there have been TODO Tully XX debian downloads from its supported Ubuntu operating system.
+MoveIt! was officially alpha released on May 6th, 2013 - 183 days as of this writing. One method to quantify its popularity is by the total number of pre-build binary and source code installations that have been performed. Though not exactly representative of this data, MoveIt!'s website has an ``Installation'' page that has received 7,688 page views since being launched \cite{moveit}, of which a large fraction of that number can be assumed to represent unique installations. 
 
-There are 177 users on the MoveIt! mailing list as shown over time in Figure \ref{fig:membership_plot}. The posting activity of the mailing list over time is also shown in Figure \ref{fig:membership_plot}.
+There are currently 177 users on the MoveIt! mailing list as shown over time in Figure \ref{fig:membership_plot}. The posting activity of the mailing list over time is also shown in Figure \ref{fig:membership_plot}.
 
 \begin{figure}[!t]
 \centering
 \includegraphics[width=3.4in]{images/membership_plot}
 \includegraphics[width=3.4in]{images/mailing_list}
-\caption{MoveIt!! Mailing List Statistics. MoveIt!! was alpha released in May}
+\caption{MoveIt! Mailing List Statistics. MoveIt! was alpha released in May}
 \label{fig:membership_plot}
 \end{figure}
 
-There have been a total of 48 contributors to the MoveIt!! code base since its initial development began in 2011. The total number of contributors over time is shown in Figure \ref{fig:contributors}. According to statistics gathered by Ohloh, MoveIt! is ''one the largest open-source teams in the world and is in the top 2\% of all project teams on Ohloh'' \cite{ohloh}.
+There have been a total of 48 contributors to the MoveIt! code base since its initial development began in 2011. The total number of contributors over time is shown in Figure \ref{fig:contributors}. According to statistics gathered by Ohloh, MoveIt! is ``one the largest open-source teams in the world and is in the top 2\% of all project teams on Ohloh'' \cite{ohloh}.
 
 \begin{figure}[!t]
 \centering
 \includegraphics[width=3.4in]{images/moveit_contributors}
-\caption{MoveIt!! Source Repository Statistics}
+\caption{MoveIt! Source Repository Statistics}
 \label{fig:contributors}
 \end{figure}
 
@@ -444,15 +444,15 @@ There have been a total of 48 contributors to the MoveIt!! code base since its i
 \includegraphics[width=3.4in]{images/setup_assistant_positive}
 \includegraphics[width=3.4in]{images/sa_speedup}
 \includegraphics[width=3.4in]{images/moveit_after_sa}
-\caption{Survey data of 105 respondents on the MoveIt!! and ROS mailing lists.}
+\caption{Survey data of 105 respondents on the MoveIt! and ROS mailing lists.}
 \label{fig:setup_assistant_positive}
 \end{figure} 
 
-A survey on user's experience with MoveIt!! was administered over the MoveIt!! and ROS mailing lists. There were a total of 105 respondents, TODO talk about their demographics. Relevant results are shown in Figure \ref{fig:setup_assistant_positive}. 
+A survey on user's experience with MoveIt! was administered over the MoveIt! and ROS mailing lists. There were a total of 105 respondents, TODO talk about their demographics. Relevant results are shown in Figure \ref{fig:setup_assistant_positive}. 
 
-Respondents were asked to rate their overall experience with using the MoveIt!! Setup Assistant, and asked how much the SA helped in speeding up setup of a robot in MoveIt!!. For both questions, ninety percent had moderate to extremely good experiences with the SA, and for both questions over half rated their experience 'very good'. 
+Respondents were asked to rate their overall experience with using the MoveIt! Setup Assistant, and asked how much the SA helped in speeding up setup of a robot in MoveIt!. For both questions, ninety percent had moderate to extremely good experiences with the SA, and for both questions over half rated their experience 'very good'. 
 
-Respondents were then asked what their overall experience was with setting up and configuring MoveIt!!, including any additional steps they had to take after the SA such as setting up controllers and sensors. In this question, the results were less positive. Forty percent had a moderately positive experience, but only 28\% had a 'very' or 'extremely' positive experience. 
+Respondents were then asked what their overall experience was with setting up and configuring MoveIt!, including any additional steps they had to take after the SA such as setting up controllers and sensors. In this question, the results were less positive. Forty percent had a moderately positive experience, but only 28\% had a 'very' or 'extremely' positive experience. 
 
 An additional question asked respondents 'how many minutes would you estimate you spent going from a URDF to solving motion plans using the MoveIt! Motion Planning Visualizer?'. The responses to this question had a large amount of variance with the mean time taking users 1.5 hours with a standard deviation of 2 hours.
 
@@ -469,11 +469,13 @@ An additional question asked respondents 'how many minutes would you estimate yo
 \subsection{MoveIt! Setup}
 \label{sec::moveit_discussion}
 
-We believe the setup process for MoveIt! is easier than most open source robotics software available today, and as a result it has in a short amount of time become popular in the robotics community as a powerful motion planning framework that is extensible to most user's needs. The adoption rate of MoveIt! since its official release less than half a year ago has been very positive and the number of contributors has been better than expected. Ohloh's ranking of MoveIt! as one of the largest open source teams in the world confirms our belief that by making complex software more accessible, more developers will be able to report and fix issues. 
+We believe the barrier to entry for MoveIt! is easier than most, if not all, open source robotics software available today as discussed in Section \ref{sec::existing}. As a result MoveIt! has quickly become popular in the robotics community as a powerful motion planning framework that is extensible to most user's needs for their robot application. The adoption rate of MoveIt! since its official release less than half a year ago has been very positive in comparison to the size of the world wide robotics community. With 177 users on the mailing list since MoveIt!'s release, a new member has joined the project at a rate of nearly once per day. Though a very rough estimate, it can additionally be approximated that MoveIt! has been installed seven thousand times, or 38 times per day since its release. These numbers indicate a healthy usage and popularity of this open source software project.
 
-It is important to emphasize the effect of a quick \textit{Getting Started} demo on a new user unaccustomed to MoveIt! or motion planning in general. The positive reinforcement of a quick initial success encourages the novice to continue to use the software and enables them to begin going deeper into the functionality and code base. If the entry barrier is too high, that is to say if it is too complex and error-prone, a new user will likely give up and turn to other frameworks or custom solutions. Attempting to blindly fix software that a new user has not had any success with is a very difficult task.
+Community effort to improve MoveIt! has been better than expected with a total of 48 code contributors during MoveIt!'s existence. Ohloh's ranking of MoveIt! as one of the largest open source teams in the world confirms our belief that by making complex software more accessible, more developers will be able to report and fix issues. 
 
 Still, the setup and configuration process has room for improvement as indicated by the survey's TODO. 
+
+It is important to emphasize the effect of a quick \textit{Getting Started} demo on a new user unaccustomed to MoveIt! or motion planning in general. The positive reinforcement of a quick initial success encourages the novice to continue to use the software and enables them to begin going deeper into the functionality and code base. If the entry barrier is too high, that is to say if it is too complex and error-prone, a new user will likely give up and turn to other frameworks or custom solutions. Attempting to blindly fix software that a new user has not had any success with is a very difficult task.
 
 Creating the robot model itself is a difficult task that typically requires a lot of trial and error in configuring the links and joints properly. This process could be improved by a better GUI for making arbitrary robot models. TODO elaborate 
 
@@ -490,7 +492,7 @@ The techniques utilized in the development of MoveIt! can easily be applied to r
 
 For example, in perception applications such as visual servoing, frame transforms must be specified of the location of the camera to the rest of the robot's geometry. This is often a difficult and tedious task CITE. Automating the calibration of these transforms lowers the barrier of entry to new users to robotic vision software and makes the vision software useful to more users.
 
-Creating a GUI such as the Setup Assistant is a time consuming process that many robotics developers avoid in favor of manual or command-line based configuration. As discussed in the introduction, we believe that the trade off in the time invested is worthwhile for the higher adoption rates and creation of a larger community willing to contribute to the software's development. It is understandable that when robotics research is the priority, spending time on tangential aspects of the project such as GUIs and configuration tools can be less important to the researcher. Still, we would like to encourage researchers and developers alike to, when possible, spend the extra time making their work reusable by taking into consideration the barriers to entry that other users might encounter. Too often, software is touted as ''open source'' when its usefulness is in actuality severely limited by the difficulties encountered in applying it to other projects by other users. By sharing accessible open source robotics 
+Creating a GUI such as the Setup Assistant is a time consuming process that many robotics developers avoid in favor of manual or command-line based configuration. As discussed in the introduction, we believe that the trade off in the time invested is worthwhile for the higher adoption rates and creation of a larger community willing to contribute to the software's development. It is understandable that when robotics research is the priority, spending time on tangential aspects of the project such as GUIs and configuration tools can be less important to the researcher. Still, we would like to encourage researchers and developers alike to, when possible, spend the extra time making their work reusable by taking into consideration the barriers to entry that other users might encounter. Too often, software is touted as ``open source'' when its usefulness is in actuality severely limited by the difficulties encountered in applying it to other projects by other users. By sharing accessible open source robotics 
 software, the progress of robotic technology is accelerated and the robotics community on the whole benefits.
 
 TODO: more about how these results can be generalized and standardized
