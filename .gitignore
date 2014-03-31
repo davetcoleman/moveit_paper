@@ -8,6 +8,7 @@ moveit_setup.tex~
 moveit_setup.tex.backup
 moveit_setup_bibliography.bib.backup
 moveit_setup_bibliography.bib~
+moveit_setup_bibliography.log
 .DS_Store
 moveit_setup.synctex.gz
 images/formatted_profiles.psd
