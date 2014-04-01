@@ -176,15 +176,15 @@ The user interface design principles required in the emerging field of robotics
 software is similar to other more mature software engineering fields and much
 can be learned from them. There have been many examples of software, such as
 computer operating systems, that have historically required many installation
-and configuration steps whose setup process has since improved. Still, robotics
-software in general is unique in 1) the degree to which software interacts with
-hardware and real world environments, 2) the large variety in complexity and
+and configuration steps whose setup process has since improved. Still, the user 
+interface design principles for robotics is unique in 1) the degree to which software interacts with
+hardware and real world environments compared to consumer-level software, 2) the large variety in complexity and
 scale of robotic platforms, and 3) the long term desire to increase the autonomy
 of robotics systems by reducing reliance on GUIs and increasing high level
 robotic intelligence. 
 
 % ====================================================================
-\subsection{Barriers to Entry}
+\subsection{Barriers to Entry} 
 
 The term \textit{barriers to entry} is used in the context of robotic software
 engineering to refer to the time, effort, and knowledge that a new user must
@@ -537,7 +537,9 @@ users---though in Robotics these groups are frequently the same. Documentation
 is arguably the most important factor in reducing the barrier to entry of new
 software \cite{forward2002relevance}.
 
-Many of these principles have opposing objectives that require a balance to be
+These principles are additionally applicable to computer software in general, but a greater focus on hardware variance and the needs of developers has been applied. \textit{Reconfigurability}, or personalization, is common in computer software as well, but in our application we use it mainly in reference to parameters that require customization for different physical geometries and hardware designs. Similarly, \textit{extensibility} and \textit{transparentness} are design principles that aid robotic developers in applying their software to specific hardware. Whereas today most computer hardware is fairly standardized and share similar capabilities, robotics hardware still has large variability in design and capability.
+
+Many of these entry barrier design principles have opposing objectives that require a balance to be
 found between them. For example, the desire for \textit{transparency} in the
 underlying mechanisms often leads to slower setup times (lack of
 \textit{immediacy}) and more complicated configuration steps (lack of
@@ -1066,6 +1068,10 @@ likely give up and turn to other frameworks or custom solutions. Attempting to
 blindly fix software that a new user has not had any success with is a very
 difficult task.
 
+Finding the balance between the opposing objectives of the entry barrier design principles was a difficult task in developing MoveIt!. \textit{Immediacy} was given one of the highest priorities, such that we focused on users being able to go from robot model to planning feasible motion plans with very few steps. To allow this, the GUI streamlined the entire process and only presented the most important and \textit{intutitive} configuration options. For example, the concept of defining the parts of a robot that make up an arm is very \textit{intutive}. This focus on \textit{immediacy} sacrifices \textit{transparency} in that once users get this initial virtual demonstration working, they have not learned much on how to extend or dive deeper into the MPF. At this point \textit{documentation} is necessary to the user. 
+
+Another conflicting principle is \textit{extensibility} with \textit{intuitiveness}. The powerful plugin framework that MoveIt! provides allows custom components to be loaded and swapped out at runtime. However, this requires many layers of abstraction and inheritance, and results in overall convoluted code that is difficult for new developers. The balance is attempted by providing documentation and code examples for plugins that allows users to build new components without worrying about the underlying framework.
+
 \subsection{Robotic Software}
 \label{sec::robotic_discussion}
 
@@ -1092,7 +1098,7 @@ The entry barrier design principles of immediacy, transparency, intuitiveness,
 reconfigurability, extensibility, and documentation present a set of guidelines
 for other open source robotic software projects to reduce their barriers of
 entry to users. In fact, many existing robotics projects already follow subsets
-of these principles but typically to a lesser extent and fervor.
+of these principles, but typically to a lesser extent and fervor.
 
 Creating a GUI such as the Setup Assistant is a time consuming process that many
 robotics developers avoid in favor of hard-coded or command-line based
