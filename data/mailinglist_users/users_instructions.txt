@@ -1,0 +1,11 @@
+How to process moveit mailist data
+
+Go to google group and view members
+Sort by joined date
+Copy all members to clipboard
+paste into gedit
+use command:
+   cat users.txt | grep -E '^joined' 
+Find replace in gedit the word "joined "
+Copy into OpenOffice sheet, pasting with option of date format MDY
+

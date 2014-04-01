@@ -1,8 +1,8 @@
-oan Alexandru Sucan
+Ioan Alexandru Sucan
 joined Jan 30, 2013
 (Owner)
 
-mmoll
+Mark Moll
 joined Jan 30, 2013
 (Member)
 
@@ -24,10 +24,6 @@ joined Feb 4, 2013
 
 E. Gil Jones
 joined Feb 4, 2013
-(Member)
-
-Daniel Perea Ström
-joined Feb 5, 2013
 (Member)
 
 Kai Franke
@@ -54,7 +50,7 @@ Lorenz Halt
 joined Apr 9, 2013
 (Member)
 
-S Krishna Savant
+Savant Krishna
 joined Apr 9, 2013
 (Member)
 
@@ -162,7 +158,7 @@ Steffen P
 joined May 16, 2013
 (Member)
 
-pirobotpr...@gmail.com
+Patrick Goebel
 joined May 16, 2013
 (Member)
 
@@ -190,7 +186,7 @@ Jorge Nicho
 joined May 23, 2013
 (Member)
 
-Byeong-Kyu Ahn
+ByeongKyu Ahn
 joined May 24, 2013
 (Member)
 
@@ -278,7 +274,7 @@ Muhammad Asif Arain
 joined Jun 17, 2013
 (Member)
 
-kmar...@rethinkrobotics.com
+Kyle Maroney
 joined Jun 17, 2013
 (Member)
 
@@ -290,7 +286,7 @@ kalakris
 joined Jun 18, 2013
 (Member)
 
-Tao Gao
+Tao g
 joined Jun 18, 2013
 (Member)
 
@@ -314,7 +310,7 @@ Callie Clement
 joined Jun 26, 2013
 (Member)
 
-schluc...@yahoo.de
+Schluchti2011
 joined Jun 28, 2013
 (Member)
 
@@ -328,10 +324,6 @@ joined Jul 3, 2013
 
 Ananias Paiva
 joined Jul 4, 2013
-(Member)
-
-Aswin Thomas
-joined Jul 6, 2013
 (Member)
 
 ding jienan
@@ -356,10 +348,6 @@ joined Jul 10, 2013
 
 Brian O'Neil
 joined Jul 16, 2013
-(Member)
-
-Andrew Bouchard
-joined Jul 18, 2013
 (Member)
 
 Vladimír Petrík
@@ -514,10 +502,6 @@ Kei Okada
 joined Sep 20, 2013
 (Member)
 
-Hirotaka Moriguchi
-joined Sep 21, 2013
-(Member)
-
 Lennart
 joined Sep 24, 2013
 (Member)
@@ -538,7 +522,7 @@ Scott Kiesel
 joined Sep 26, 2013
 (Member)
 
-zl...@cornell.edu
+Zhonghe Li
 joined Sep 27, 2013
 (Member)
 
@@ -564,10 +548,6 @@ joined Oct 6, 2013
 
 Unais T
 joined Oct 6, 2013
-(Member)
-
-Rein Appeldoorn
-joined Oct 7, 2013
 (Member)
 
 Sudarshan Srinivasan
@@ -634,10 +614,6 @@ Wouter Bac
 joined Oct 16, 2013
 (Member)
 
-Samuel Davies
-joined Oct 16, 2013
-(Member)
-
 Ryohei Ueda
 joined Oct 17, 2013
 (Member)
@@ -660,3 +636,600 @@ joined Oct 22, 2013
 
 Ankit Jain
 joined Oct 22, 2013
+(Member)
+
+Ryan Christiansen
+joined Oct 23, 2013
+(Member)
+
+Blarg
+joined Oct 25, 2013
+(Member)
+
+Perry Franklin
+joined Oct 25, 2013
+(Member)
+
+mithran...@gmail.com
+joined Oct 28, 2013
+(Member)
+
+Maska Me
+joined Oct 30, 2013
+(Member)
+
+Marco Paladini
+joined Oct 30, 2013
+(Member)
+
+Mattia Gallegati
+joined Oct 31, 2013
+(Member)
+
+Daniel Solomon
+joined Oct 31, 2013
+(Member)
+
+Biriuk Ivan
+joined Nov 2, 2013
+(Member)
+
+Acorn Pooley
+joined Nov 3, 2013
+(Member)
+
+Thomas Carstens
+joined Nov 4, 2013
+(Member)
+
+Stefan Winkvist
+joined Nov 5, 2013
+(Member)
+
+Thiago de Freitas
+joined Nov 5, 2013
+(Member)
+
+Bahman Ghiasvand
+joined Nov 6, 2013
+(Member)
+
+Luis Rubio
+joined Nov 12, 2013
+(Member)
+
+Moises Estrada
+joined Nov 12, 2013
+(Member)
+
+Felix Burget
+joined Nov 13, 2013
+(Member)
+
+Mark Pitchless
+joined Nov 13, 2013
+(Member)
+
+dave.her...@sri.com
+joined Nov 15, 2013
+(Member)
+
+Ryan Giovacchini
+joined Nov 16, 2013
+(Member)
+
+max seredin
+joined Nov 18, 2013
+(Member)
+
+Lei Zhao
+joined Nov 20, 2013
+(Member)
+
+Francisco Vina
+joined Nov 22, 2013
+(Member)
+
+Benny Pi
+joined Nov 24, 2013
+(Member)
+
+Bennet
+joined Nov 26, 2013
+(Member)
+
+Felix Ingrand
+joined Nov 27, 2013
+(Member)
+
+Pravakar Roy
+joined Dec 1, 2013
+(Member)
+
+Prithvi Sekhar Pagala
+joined Dec 3, 2013
+(Member)
+
+Chris Zalidis
+joined Dec 3, 2013
+(Member)
+
+clint p
+joined Dec 4, 2013
+(Member)
+
+根井学
+joined Dec 5, 2013
+(Member)
+
+Paul Jurczak
+joined Dec 10, 2013
+(Member)
+
+陳懷遠
+joined Dec 11, 2013
+(Member)
+
+Peter de Cortes
+joined Dec 14, 2013
+(Member)
+
+Michael Stypa
+joined Dec 16, 2013
+(Member)
+
+Raul Merino Lopez
+joined Dec 17, 2013
+(Member)
+
+Mohammed Shameer
+joined Dec 18, 2013
+(Member)
+
+Renaud Viry
+joined Dec 18, 2013
+(Member)
+
+Zhang Jun
+joined Dec 19, 2013
+(Member)
+
+Damien Smeets
+joined Dec 20, 2013
+(Member)
+
+atp
+joined Dec 20, 2013
+(Member)
+
+Vipul
+joined Dec 25, 2013
+(Member)
+
+Nuno Marques
+joined Dec 25, 2013
+(Member)
+
+Miguel Mora Cuesta
+joined Jan 3, 2014
+(Member)
+
+rich.m...@sri.com
+joined Jan 4, 2014
+(Member)
+
+Karthik Desingh
+joined Jan 7, 2014
+(Member)
+
+Gonçalo Cabrita
+joined Jan 8, 2014
+(Member)
+
+Bence Magyar
+joined Jan 8, 2014
+(Member)
+
+Tommy Persson
+joined Jan 8, 2014
+(Member)
+
+Keliang He
+joined Jan 9, 2014
+(Member)
+
+Arjun Menon
+joined Jan 9, 2014
+(Member)
+
+Fanglong Luo
+joined Jan 11, 2014
+(Member)
+
+Mor Vered
+joined Jan 14, 2014
+(Member)
+
+Gert Comments
+joined Jan 15, 2014
+(Member)
+
+p...@generationrobots.com
+joined Jan 15, 2014
+(Member)
+
+Burak Topal
+joined Jan 15, 2014
+(Member)
+
+mfr...@vt.edu
+joined Jan 16, 2014
+(Member)
+
+xiao...@gmail.com
+joined Jan 16, 2014
+(Member)
+
+David Fornas Garcia
+joined Jan 17, 2014
+(Member)
+
+Chris Reardon
+joined Jan 17, 2014
+(Member)
+
+jeanlegendre122
+joined Jan 20, 2014
+(Member)
+
+kusuda_itnl
+joined Jan 20, 2014
+(Member)
+
+Ben Axelrod
+joined Jan 21, 2014
+(Member)
+
+Jen Nifer
+joined Jan 21, 2014
+(Member)
+
+David Hong
+joined Jan 21, 2014
+(Member)
+
+Henning Deeken
+joined Jan 22, 2014
+(Member)
+
+ng
+joined Jan 22, 2014
+(Member)
+
+Prasenjit Mukherjee
+joined Jan 23, 2014
+(Member)
+
+YIMING YANG
+joined Jan 24, 2014
+(Member)
+
+Luis Sanchez
+joined Jan 24, 2014
+(Member)
+
+Yeshasvi Yeshi
+joined Jan 28, 2014
+(Member)
+
+Arne Hitzmann
+joined Jan 28, 2014
+(Member)
+
+Thiago Motta
+joined Jan 28, 2014
+(Member)
+
+Evgeniy Koryagin
+joined Jan 29, 2014
+(Member)
+
+cdrwolfe
+joined Jan 29, 2014
+(Member)
+
+Yue Wang
+joined Jan 29, 2014
+(Member)
+
+Valerian Utkin
+joined Jan 30, 2014
+(Member)
+
+Richard Williams
+joined Jan 30, 2014
+(Member)
+
+David Altemir
+joined Jan 30, 2014
+(Member)
+
+s...@generationrobots.com
+joined Jan 31, 2014
+(Member)
+
+Matthew Denninghoff
+joined Jan 31, 2014
+(Member)
+
+Erez Karpas
+joined Feb 3, 2014
+(Member)
+
+李苗浡
+joined Feb 5, 2014
+(Member)
+
+Y. Li
+joined Feb 6, 2014
+(Member)
+
+Martin Szarski
+joined Feb 7, 2014
+(Member)
+
+Vitor Matos
+joined Feb 8, 2014
+(Member)
+
+jkoregaokar
+joined Feb 8, 2014
+(Member)
+
+Mukunda Bharatheesha
+joined Feb 10, 2014
+(Member)
+
+Steven Schell
+joined Feb 10, 2014
+(Member)
+
+Steven Schell
+joined Feb 10, 2014
+(Member)
+
+Steve Levine
+joined Feb 11, 2014
+(Member)
+
+jsnc...@gmail.com
+joined Feb 12, 2014
+(Member)
+
+Okke Hendriks
+joined Feb 13, 2014
+(Member)
+
+Rob Linsalata
+joined Feb 13, 2014
+(Member)
+
+Esmaile Mehrabi
+joined Feb 13, 2014
+(Member)
+
+Mark Geelen
+joined Feb 14, 2014
+(Member)
+
+Andreas Hermann
+joined Feb 14, 2014
+(Member)
+
+Morten Palmelund-Jensen
+joined Feb 14, 2014
+(Member)
+
+Gayane Kazhoyan
+joined Feb 14, 2014
+(Member)
+
+Toni Peñalver Monfort
+joined Feb 17, 2014
+(Member)
+
+Stephan Behm
+joined Feb 17, 2014
+(Member)
+
+Abhishek Mehta
+joined Feb 18, 2014
+(Member)
+
+Ruoyu Tan
+joined Feb 19, 2014
+(Member)
+
+Shiraj Sen
+joined Feb 19, 2014
+(Member)
+
+Greg Scott
+joined Feb 19, 2014
+(Member)
+
+Stanislas Brossette
+joined Feb 19, 2014
+(Member)
+
+ARG
+joined Feb 20, 2014
+(Member)
+
+zhiqia...@brown.edu
+joined Feb 21, 2014
+(Member)
+
+Vladimir Korukov
+joined Feb 24, 2014
+(Member)
+
+Jin Han
+joined Feb 24, 2014
+(Member)
+
+John Davidson
+joined Feb 25, 2014
+(Member)
+
+Ajit Krisshna
+joined Feb 25, 2014
+(Member)
+
+Son Le
+joined Feb 26, 2014
+(Member)
+
+Yinxiao Li
+joined Feb 27, 2014
+(Member)
+
+David Ye
+joined Mar 2, 2014
+(Member)
+
+Katherine Scott
+joined Mar 2, 2014
+(Member)
+
+Yaxing Sun
+joined Mar 3, 2014
+(Member)
+
+Leif Jentoft
+joined Mar 3, 2014
+(Member)
+
+Suraj Swami
+joined Mar 3, 2014
+(Member)
+
+Filip Jareš
+joined Mar 4, 2014
+(Member)
+
+Felix Kolbe
+joined Mar 5, 2014
+(Member)
+
+samsagax
+joined Mar 5, 2014
+(Member)
+
+abr...@addersoftware.co.uk
+joined Mar 5, 2014
+(Member)
+
+Feroze Naina
+joined Mar 6, 2014
+(Member)
+
+hjs...@robotis.com
+joined Mar 7, 2014
+(Member)
+
+sgus...@gmail.com
+joined Mar 10, 2014
+(Member)
+
+Casper Abildgaard Pedersen
+joined Mar 11, 2014
+(Member)
+
+Javier Moriano
+joined Mar 11, 2014
+(Member)
+
+varun gopinath
+joined Mar 11, 2014
+(Member)
+
+Muhammad Asif Rana
+joined Mar 14, 2014
+(Member)
+
+Zdeněk Materna
+joined Mar 17, 2014
+(Member)
+
+Jinglin Li
+joined Mar 17, 2014
+(Member)
+
+Jose Part
+joined Mar 18, 2014
+(Member)
+
+Enrique Fernández Perdomo
+joined Mar 18, 2014
+(Member)
+
+Kevin DeMarco
+joined Mar 19, 2014
+(Member)
+
+Risto Kojcev
+joined Mar 20, 2014
+(Member)
+
+Chi Zhang
+joined Mar 20, 2014
+(Member)
+
+revi...@gmail.com
+joined Mar 20, 2014
+(Member)
+
+andrew....@gmail.com
+joined Mar 20, 2014
+(Member)
+
+Muhammad Abdur Rehman Khawaja
+joined Mar 23, 2014
+(Member)
+
+pavan sikka
+joined Mar 24, 2014
+(Member)
+
+Stefano Primatesta
+joined Mar 25, 2014
+(Member)
+
+Naresh Neelakantan
+joined Mar 26, 2014
+(Member)
+
+Rob Farrell
+joined Mar 26, 2014
+(Member)
+
+Jimmy Kizito
+joined Mar 27, 2014
+(Member)
+
+Silvio Traversaro
+joined Mar 27, 2014
+(Member)
+
+Astro Cpe
+joined Mar 28, 2014
+(Member)
+
+Handy Wicaksono
+joined Mar 30, 2014
+(Member)
+
+andreas.bihlmaier
+joined Mar 31, 2014
+(Member)
