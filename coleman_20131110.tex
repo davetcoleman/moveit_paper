@@ -270,13 +270,15 @@ interfaces (GUIs) are only necessary for the robot developers themselves
 % ====================================================================
 \subsection{Difficulty of Robot Agnostic Software}
 
-The software engineering challenges faced in making robot-agnostic code are
-hard---many shortcuts typical for single-robot software must be avoided, such as
-hard coding domain-specific values and using heuristics applicable to only one
-hardware configuration. Accounting for all the edge cases of a robot's design
-requires many extra levels of abstraction. On top of these challenges, packaging
-this reusable software into an easy to setup experience for end users
-requires creating tools that automate the configuration of the software.
+The software engineering challenges faced in making reusuable robot-agnostic code are hard and are different than those in other re-usable software frameworks. In \cite{smart2007common}, Smart argues there are three main factors that make general-purpose robotic software difficult: heterogeneity of robotics, limited resources (computational or otherwise), and the high rate of hardware and software failures. 
+
+The heterogeneity of robots is of primary concern to us in this paper - accounting for different types of actuators, sensors, and overall form factors is a very difficult task. To some users a robot is a robust and precise industrial arm, to others a robot is simply a mobile base with wheels and a computer, and to others a robot is a fully anthropomorphic biped. Creating resonable abstractions for these large amounts of variation requires many trade offs to be made that almost always lead to a sub-optimal solution for all robots. It is more difficult to create a hardware abstraction for a robot than a standard computer - when robotic software must interact with physical devices through an abstraction, it gives up specific knowledge of the hardware that then requires much greater reasoning and understanding of its configuration \cite{smart2007common}.
+
+Operational requirements are another challenge in making reusable software for a wide range of robotic platforms. Some users require hard real-time constraints, while others can tolerate ``fast enough'' or ``best effort'' levels of performance. Variable amounts of available computational resources such as processing power or the ``embeddedness'' of the system also makes it difficult to design robot agnostic code that can run sufficiently on all robots. Finally the amount of required error checking and fault tolerance varies by application area, for example the differences in requirements between university research robot and a space exploration rover.
+
+In making robotic agnostic softare, many time-saving shortcuts employed for single-robot software must be avoided. This includes hard coding domain-specific values for ``tweaking'' performance and using short-cutting heuristics applicable to only one hardware configuration. Instead reasonable default values or automatically optimized parameters much be provided as discussed later. 
+
+On top of these challenges, packaging reusable software into an easy to setup experience for end users requires creating tools that automate the configuration of the software.
 
 % ====================================================================
 \subsection{Related Work}
@@ -929,7 +931,7 @@ month.
 \centering
 \includegraphics[width=3.4in]{coleman_20131110_f11}
 \includegraphics[width=3.4in]{coleman_20131110_f12}
-\caption{MoveIt! Mailing List Statistics. MoveIt! was alpha released in May}
+\caption{MoveIt! mailing list statistics though March 2014. MoveIt! was alpha released in May 2013}
 \label{fig:membership_plot}
 \end{figure}
 
@@ -943,7 +945,7 @@ project teams on Ohloh'' \cite{ohloh}.
 \begin{figure}[!t]
 \centering
 \includegraphics[width=3.4in]{coleman_20131110_f13}
-\caption{MoveIt! Source Repository Statistics}
+\caption{MoveIt! source repository contributions through May 2014}
 \label{fig:contributors}
 \end{figure}
 
