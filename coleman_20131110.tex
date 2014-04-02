@@ -270,13 +270,13 @@ interfaces (GUIs) are only necessary for the robot developers themselves
 % ====================================================================
 \subsection{Difficulty of Robot Agnostic Software}
 
-The software engineering challenges faced in making reusuable robot-agnostic code are hard and are different than those in other re-usable software frameworks. In \cite{smart2007common}, Smart argues there are three main factors that make general-purpose robotic software difficult: heterogeneity of robotics, limited resources (computational or otherwise), and the high rate of hardware and software failures. 
+The software engineering challenges faced in making reusuable robot-agnostic code are hard and are different than those in other re-usable software frameworks. In \cite{smart2007common}, Smart argues there are three main factors that make general-purpose robotic software difficult: heterogeneity of robotics, limited resources (computational or otherwise), and the high rate of hardware and software failures. The variety of different tasks and task constraints imposed upon robots is another challenge for robot agnostic software \cite{kchir2013top}.
 
 The heterogeneity of robots is of primary concern to us in this paper - accounting for different types of actuators, sensors, and overall form factors is a very difficult task. To some users a robot is a robust and precise industrial arm, to others a robot is simply a mobile base with wheels and a computer, and to others a robot is a fully anthropomorphic biped. Creating resonable abstractions for these large amounts of variation requires many trade offs to be made that almost always lead to a sub-optimal solution for all robots. It is more difficult to create a hardware abstraction for a robot than a standard computer - when robotic software must interact with physical devices through an abstraction, it gives up specific knowledge of the hardware that then requires much greater reasoning and understanding of its configuration \cite{smart2007common}.
 
-Operational requirements are another challenge in making reusable software for a wide range of robotic platforms. Some users require hard real-time constraints, while others can tolerate ``fast enough'' or ``best effort'' levels of performance. Variable amounts of available computational resources such as processing power or the ``embeddedness'' of the system also makes it difficult to design robot agnostic code that can run sufficiently on all robots. Finally the amount of required error checking and fault tolerance varies by application area, for example the differences in requirements between university research robot and a space exploration rover.
+Operational requirements are another challenge in making reusable software for a wide range of robotic platforms. Some users require hard real-time constraints, while others can tolerate ``fast enough'' or ``best effort'' levels of performance. Variable amounts of available computational resources such as processing power or the ``embeddedness'' of the system also makes it difficult to design robot agnostic code that can run sufficiently on all robots. The amount of required error checking and fault tolerance varies by application area, for example the differences in requirements between a university research robot and a space exploration rover.
 
-In making robotic agnostic softare, many time-saving shortcuts employed for single-robot software must be avoided. This includes hard coding domain-specific values for ``tweaking'' performance and using short-cutting heuristics applicable to only one hardware configuration. Instead reasonable default values or automatically optimized parameters much be provided as discussed later. 
+In making robotic agnostic softare, many time-saving shortcuts employed for single-robot software must be avoided. This includes hard coding domain-specific values for ``tweaking'' performance and using short-cutting heuristics applicable to only one hardware configuration. Instead reasonable default values or automatically optimized parameters must be provided as discussed later. 
 
 On top of these challenges, packaging reusable software into an easy to setup experience for end users requires creating tools that automate the configuration of the software.
 
@@ -292,6 +292,9 @@ real-time performance, software reuse, and distributed layouts
 environments, a collection of metrics was used which included documentation and
 GUIs, but no mention was made of setup time, barrier to entry, or automated
 configuration.
+
+A focus on component-based design of motion planning libraries similar to MoveIt! was addressed in \cite{brugali2010component}. The challenges of software re-use, combining various algorithms, and customizations are discussed, but the work falls short of addressing the initial ease of use of these robotics frameworks. The difficulty of creating good component abstractions between hardware and algorithms is addressed in \cite{kchir2013top}. 
+
 
 The importance of an open source robotics framework having a large number of
 researchers and engineers motivated to contribute code and documentation is
@@ -328,8 +331,7 @@ in an entry tool for MoveIt! to reduce the entry barriers. In section \ref{sec::
 results of these implementations on the size of the user base and ease of
 adoption of the MoveIt! software framework. We will discuss our experiences and
 lessons learned in section \ref{sec::discussion}, followed by our conclusion in
-section \ref{
-sec::conclusion}.
+section \ref{sec::conclusion}.
 
 % ====================================================================
 % ====================================================================
@@ -539,7 +541,7 @@ users---though in Robotics these groups are frequently the same. Documentation
 is arguably the most important factor in reducing the barrier to entry of new
 software \cite{forward2002relevance}.
 
-These principles are additionally applicable to computer software in general, but a greater focus on hardware variance and the needs of developers has been applied. \textit{Reconfigurability}, or personalization, is common in computer software as well, but in our application we use it mainly in reference to parameters that require customization for different physical geometries and hardware designs. Similarly, \textit{extensibility} and \textit{transparentness} are design principles that aid robotic developers in applying their software to specific hardware. Whereas today most computer hardware is fairly standardized and share similar capabilities, robotics hardware still has large variability in design and capability.
+These principles are additionally applicable to computer software in general, but a greater focus on hardware variance and the needs of developers has been applied. \textit{Reconfigurability}, or personalization, is common in computer software as well, but in our application we use it mainly in reference to parameters that require customization for different physical geometries and hardware designs. Similarly, \textit{extensibility} and \textit{transparentness} are design principles that aid robotic developers in applying their software to specific hardware. Whereas today most computer hardware is fairly standardized and share similar capabilities, robotics hardware still has large variability in design and capability. For this reason, \textit{transparency} is particularly important since many robotic researchers and developers need to understand the software enough to adapt it to their unique hardware.
 
 Many of these entry barrier design principles have opposing objectives that require a balance to be
 found between them. For example, the desire for \textit{transparency} in the
@@ -598,11 +600,7 @@ articulated rigid bodies.
 can express the intricacies of varying hardware configurations. An additional
 design requirement for this standardized format is that it is \textit{intuitive}
 for users to setup. There are a few options for representing robots, and in
-MoveIt! it was accomplished by utilizing the human-readable
-(\textit{transparent}) XML schema provided by ROS for robot models---the
-Universal Robotic Description Format (URDF) \cite{urdf}. This data structure
-format can accept URDF-formatted files, as well as the industry standard Collada
-\cite{collada} format. 
+MoveIt! it was accomplished by using the Universal Robotic Description Format (URDF \cite{urdf}) Document Object Model. This data structure is populated by reading human-readable (\textit{transparent}) XML schemas - both URDF-formatted files (different from the datastructure) as well as the industry standard Collada \cite{collada} format. 
 
 Creating an accurate model of a robot can be a difficult task. URDF models for
 many robots already exist, so often users can avoid this problem. However, when
@@ -652,7 +650,7 @@ Using a properly formatted robot model file with the SA, MoveIt! can
 automatically accomplish many of the required tasks in a MPF. If one desired,
 the steps within the SA could almost entirely be automated themselves, but they
 have been kept manual so to 1) increase \textit{transparency} and 2) provide
-\textit{extensibility} for edge cases and unusual customizations.
+\textit{extensibility} for edge cases and unusual customizations. For example, automated semantical guesses of where an arm ends and an end effector begins can sometimes be incorrect.
 
 {\bf MoveIt! Motion Planning Visualization GUI}: The details of the automated
 configuration are left for the next section, but after the steps in the SA are
@@ -727,7 +725,7 @@ their robot's actual hardware actuators and control interfaces to accept
 trajectory commands from MoveIt!. This step is not as easy and requires some
 custom coding to account for the specifics of the robot hardware---the
 communication bus, real-time requirements, and controller implementations. At
-the abstract level, all MoveIt! requires is that the robot hardware accepts a
+the abstract level, all MoveIt! requires is that the robot hardware publishes its joint positions and accepts a
 standard ROS trajectory message containing a discretized set of time-variant
 waypoints including desired positions, velocities, and accelerations.  
 
@@ -790,8 +788,9 @@ planning. Default planning adapters are setup for pre- and post-processing of
 motion plans. Default benchmarking setups, controller and sensor manager
 scripts, and empty object databases are all generated using launch scripts,
 which essentially allow one to start different sets of MoveIt! functionality
-that are already put together. These defaults can easily be modified later by
-simply editing the text-based configuration files.
+that are already put together. 
+
+These configuration files can easily be modified later from their default values by simply editing the text-based configuration files. The format of the files are based on ROS standards, which were chosen for their wide spread acceptance, readability, and simplicity. For the launch files an XML-based format custom to launching ROS applications was utilized. For all other configuration files the open source YAML data serialization format was used.
 
 {\bf Automatic Runtime Tuning}: MoveIt! is designed to simplify solving planning
 problems by reducing the number of hard-coded parameters and so called ``magic
@@ -810,8 +809,8 @@ to estimate coverage during planning. For example, the projections for robot
 arms are orthogonal ones, using the joints closer to the shoulder, as those most
 influence the position of the end-effector.
 
-{\bf Benchmarking}: The ability to configure and switch out different planning
-components is a powerful feature of MoveIt!, but its usefulness is limited
+{\bf Benchmarking}: For applications that require more tuning and optimization than those afforded by automatically generated parameters and default values, MoveIt! provides the ability to configure and switch out different planning
+components and change values. However, this capability is much less useful
 without the ability to quantify the results of different approaches.
 Optimization criteria such as path length, planning time, smoothness, distance
 to nearest obstacle, and energy minimization need benchmarking tools to enable
@@ -834,6 +833,8 @@ its benchmarking infrastructure by allowing an upper, lower, and increment
 search values to be provided by the user. Results can be output into generic
 formats for use in different plotting tools for analysis of which combination of
 parameters performed the best.
+
+Attempting to fine-tune the functionality of MoveIt! with benchmarking and parameter sweeping is a feature for expert users and it is generally not required for entry-level users for first-pass implementations.
 
 % ====================================================================
 \subsection{Easily Customize Framework Components}
@@ -911,21 +912,22 @@ through the application of the barrier to entry principles is quantified in the
 following. Its adoption rate, community activity, contributors, and results from
 a user survey are used as indicators of its progress.
 
+% ====================================================================
 \subsection{Statistics}
 \label{sec::statistics}
 
-MoveIt! was officially alpha released on May 6th, 2013 --- roughly half a year
+MoveIt! was officially alpha released on May 6th, 2013 --- about 11 months
 prior to this writing. One method to quantify its popularity is by the total
 number of binary and source code installations that have been performed. Though
 not exactly representative of this data, MoveIt!'s website has an
-``Installation'' page that has received 7,688 page views since being launched
+``Installation'' page that receives an average of 940 unique page views per month
 \cite{moveit} - a large fraction of that number can be assumed to represent
 unique installations. 
 
-There are currently 177 users on the MoveIt! mailing list as shown over time in
+There are currently 309 members on the MoveIt! mailing list as shown over time in
 Figure \ref{fig:membership_plot}. The posting activity of the mailing list over
-time is also shown in Figure \ref{fig:membership_plot}, averaging 183 posts per
-month.
+time is also shown in Figure \ref{fig:membership_plot}, averaging 164 posts per
+month since MoveIt! was launched.
 
 \begin{figure}[!t]
 \centering
@@ -935,7 +937,7 @@ month.
 \label{fig:membership_plot}
 \end{figure}
 
-There have been a total of 48 contributors to the MoveIt! code base since its
+There have been a total of 63 contributors to the MoveIt! code base since its
 initial development began in 2011. The total number of contributors over time is
 shown in Figure \ref{fig:contributors}. According to statistics gathered by the
 website Ohloh.com, which tracks activity of open source projects, MoveIt! is
@@ -949,6 +951,20 @@ project teams on Ohloh'' \cite{ohloh}.
 \label{fig:contributors}
 \end{figure}
 
+% ====================================================================
+\subsection{Comparison}
+\label{sec::comparison}
+
+A brief comparison with MoveIt! to OMPL and OpenRave is demonstrated in Figure \ref{fig:comparison}. In this diagram the total number of code contributors is plotted with respect to time, as reported from the projects respective version control systemx (VCS). No other software projects discussed in this paper had VCSs available publicly for comparison.
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=3.4in]{coleman_20131110_f17}
+\caption{Comparison of code contributions between MoveIt!, OMPL, and OpenRave}
+\label{fig:comparison}
+\end{figure}
+
+% ====================================================================
 \subsection{Survey}
 \label{sec::survey}
 
@@ -997,6 +1013,7 @@ variance, with the mean time taking users 1.5 hours with a standard deviation of
 \section{Discussion}
 \label{sec::discussion}
 
+% ====================================================================
 \subsection{MoveIt! Setup}
 \label{sec::moveit_discussion}
 
@@ -1006,18 +1023,14 @@ open source motion planning software available today as discussed in Section
 robotics community as a powerful MPF that is extensible to most users' needs for
 their robot application. The adoption rate of MoveIt! since its official release
 half a year ago has been very positive in comparison to the size of the world
-wide robotics community. With 177 users on the mailing list since MoveIt!'s
+wide robotics community. With 309 users on the mailing list since MoveIt!'s
 release, a new member has joined the project at a rate of nearly one per day.
-Though a very rough estimate, it can additionally be approximated that MoveIt!
-has been installed seven thousand times, or 38 times per day since its release.
+Though a very rough estimate and by no means an implication of usage, it can be approximated from the monthly average that MoveIt!
+has been installed on average 31 times per day since its release.
 These numbers indicate a healthy usage and popularity of this open source
 software project.
 
-Community effort to improve MoveIt! has been better than expected with a total
-of 48 code contributors during MoveIt!'s existence. Ohloh's ranking of MoveIt!
-as one of the largest open source teams in the world confirms our belief that by
-making complex software more accessible, more developers will be able to report
-and fix issues. 
+Community effort to improve MoveIt! has been better than expected by the large number of code contributors during MoveIt!'s existence. The comparison of two other robotics software project's all time contributors in Figure \ref{fig:comparison} makes it very evident that MoveIt! is a popular robotics project relative to others. Ohloh's ranking of MoveIt! as one of the largest open source teams in the world confirms our belief that by making complex software more accessible, more developers will be able to report and fix issues. 
 
 The results of the survey on MoveIt! indicated most people have found the
 cornerstone of our approach to lowering the barrier of entry, the Setup
@@ -1070,10 +1083,17 @@ likely give up and turn to other frameworks or custom solutions. Attempting to
 blindly fix software that a new user has not had any success with is a very
 difficult task.
 
+% ====================================================================
+\subsection{MoveIt Development}
+\label{sec::moveit_development}
+
 Finding the balance between the opposing objectives of the entry barrier design principles was a difficult task in developing MoveIt!. \textit{Immediacy} was given one of the highest priorities, such that we focused on users being able to go from robot model to planning feasible motion plans with very few steps. To allow this, the GUI streamlined the entire process and only presented the most important and \textit{intutitive} configuration options. For example, the concept of defining the parts of a robot that make up an arm is very \textit{intutive}. This focus on \textit{immediacy} sacrifices \textit{transparency} in that once users get this initial virtual demonstration working, they have not learned much on how to extend or dive deeper into the MPF. At this point \textit{documentation} is necessary to the user. 
 
 Another conflicting principle is \textit{extensibility} with \textit{intuitiveness}. The powerful plugin framework that MoveIt! provides allows custom components to be loaded and swapped out at runtime. However, this requires many layers of abstraction and inheritance, and results in overall convoluted code that is difficult for new developers. The balance is attempted by providing documentation and code examples for plugins that allows users to build new components without worrying about the underlying framework.
 
+Integrating together third party libraries of robotic software from other research groups or projects presents challenges as discussed in \cite{brugali2010component}. During MoveIt! development, the plugin interfaces were required to be general enough to work with many different implementation methods and choices of data structures. This was accomplished by providing ``wrapper'' packages that connect together the standard MoveIt! plugin interfaces with the third party software API. For example, MoveIt is currently setup to work with at least three planning libraries - OMPL, SBPL \cite{likhachevsbpl}, and CHOMP \cite{ratliff2009chomp}. Although they represent fairly different approaches to motion planning and use different datastructures, each has a wrapper component that harmonizes them to work together in MoveIt!. It should be noted that as is true with any external dependency, maintaining compatibility with these wrappers has proven challenging.
+
+% ====================================================================
 \subsection{Robotic Software}
 \label{sec::robotic_discussion}
 
