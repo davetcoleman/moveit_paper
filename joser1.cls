@@ -3418,8 +3418,7 @@ between column types.}%
     \def\@evenhead{%
         \vbox{%
 
-            \hbox to \textwidth{{ \hbox{\small\@IEEEcompsoconly{\sffamily}{\@journalname}}\hfill\hbox{\small{\@journalvolume(\@journalnumber), \@journalmonth { }\@journalyear, \@articlefirstpage-\@articlelastpage}}} }%
-            \hbox to \textwidth{{\hfill \hbox{\small\@IEEEcompsoconly{\sffamily}{ISSN: 2035-3928}}} }%
+            
 %            \vskip 1.0mm%
 %           \hrule width\textwidth height0.63pt\vskip0.85pt \hrule width\textwidth height0.63pt%
         }%
